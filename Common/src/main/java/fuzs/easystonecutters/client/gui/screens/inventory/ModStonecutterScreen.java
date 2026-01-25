@@ -7,7 +7,7 @@ import fuzs.easystonecutters.client.gui.components.RecipeImageButton;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.WidgetSprites;
-import net.minecraft.client.gui.screens.inventory.StonecutterScreen;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
@@ -25,7 +25,7 @@ import net.minecraft.world.item.crafting.display.SlotDisplayContext;
 
 import java.util.List;
 
-public class ModStonecutterScreen extends StonecutterScreen {
+public class ModStonecutterScreen extends AbstractContainerScreen<StonecutterMenu> {
     public static final Identifier TEXTURE_LOCATION = EasyStonecutters.id("textures/gui/container/stonecutter.png");
     public static final Identifier RECIPE_SELECTED_SPRITE = Identifier.withDefaultNamespace(
             "container/stonecutter/recipe_selected");
@@ -48,12 +48,19 @@ public class ModStonecutterScreen extends StonecutterScreen {
         menu.registerUpdateListener(this::containerChanged);
         this.setSlotPosition(StonecutterMenu.INPUT_SLOT, 13, 19);
         this.setSlotPosition(StonecutterMenu.RESULT_SLOT, 13, 49);
+        this.titleLabelY = 5;
     }
 
     private void setSlotPosition(int index, int x, int y) {
         Slot slot = this.getMenu().getSlot(index);
         slot.x = x;
         slot.y = y;
+    }
+
+    @Override
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
+        this.renderTooltip(guiGraphics, mouseX, mouseY);
     }
 
     @Override
@@ -101,7 +108,8 @@ public class ModStonecutterScreen extends StonecutterScreen {
 
     @Override
     public boolean keyPressed(KeyEvent event) {
-        if (event.isSelection() && !this.recipeInput.isEmpty()) {
+        if (event.isSelection() && !this.recipeInput.isEmpty() && !ItemStack.isSameItemSameComponents(this.getMenu()
+                .getCarried(), this.recipeInput)) {
             boolean hasMovedItems = false;
             Slot inputSlot = this.getMenu().getSlot(StonecutterMenu.INPUT_SLOT);
             if (inputSlot.getItem().getCount() < inputSlot.getMaxStackSize(inputSlot.getItem())) {
