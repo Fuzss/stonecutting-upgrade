@@ -1,0 +1,5 @@
+accessWidener   v2  named
+transitive-accessible   field   net/minecraft/client/gui/components/AbstractScrollArea  scrolling   Z
+transitive-extendable   method  net/minecraft/client/gui/components/AbstractSelectionList   getFirstEntryY  ()I
+transitive-mutable  field   net/minecraft/world/inventory/Slot  x   I
+transitive-mutable  field   net/minecraft/world/inventory/Slot  y   I
