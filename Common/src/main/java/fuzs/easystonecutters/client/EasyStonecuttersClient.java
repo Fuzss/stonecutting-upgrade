@@ -1,14 +1,18 @@
 package fuzs.easystonecutters.client;
 
 import fuzs.easystonecutters.client.gui.screens.inventory.ModStonecutterScreen;
+import fuzs.easystonecutters.client.handler.StoneTransmuteHandler;
+import fuzs.easystonecutters.client.handler.TransmutateShapeRenderingHandler;
 import fuzs.easystonecutters.client.renderer.rendertype.ModRenderTypes;
 import fuzs.easystonecutters.init.ModRegistry;
 import fuzs.hotbarslotcycling.api.v1.client.SlotCyclingProvider;
 import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.api.client.core.v1.context.RenderPipelinesContext;
+import fuzs.puzzleslib.api.client.event.v1.ClientTickEvents;
 import fuzs.puzzleslib.api.client.event.v1.gui.RenderGuiEvents;
 import fuzs.puzzleslib.api.client.event.v1.gui.ScreenOpeningCallback;
 import fuzs.puzzleslib.api.event.v1.core.EventResultHolder;
+import fuzs.puzzleslib.api.event.v1.entity.player.PlayerInteractEvents;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.StonecutterScreen;
 import org.jspecify.annotations.Nullable;
@@ -23,6 +27,9 @@ public class EasyStonecuttersClient implements ClientModConstructor {
     private static void registerEventHandlers() {
         ScreenOpeningCallback.EVENT.register(EasyStonecuttersClient::onScreenOpening);
         RenderGuiEvents.BEFORE.register(PocketStonecutterCyclingProvider::onBeforeRenderGui);
+        ClientTickEvents.END.register(TransmutateShapeRenderingHandler::onEndClientTick);
+//        RenderLevelEvents.AFTER_ENTITIES.register(TransmutateShapeRenderingHandler::onRenderLevelAfterEntities);
+        PlayerInteractEvents.USE_BLOCK.register(StoneTransmuteHandler::onUseBlock);
     }
 
     @Override

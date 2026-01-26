@@ -1,0 +1,8 @@
+{
+  "type": "easystonecutters:transmutation_in_world",
+  "ingredient": "minecraft:polished_blackstone_brick_stairs",
+  "result": {
+    "count": 1,
+    "id": "minecraft:blackstone_stairs"
+  }
+}

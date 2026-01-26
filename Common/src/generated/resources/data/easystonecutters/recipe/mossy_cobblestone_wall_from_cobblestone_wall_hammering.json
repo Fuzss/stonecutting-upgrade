@@ -1,0 +1,8 @@
+{
+  "type": "easystonecutters:transmutation_in_world",
+  "ingredient": "minecraft:cobblestone_wall",
+  "result": {
+    "count": 1,
+    "id": "minecraft:mossy_cobblestone_wall"
+  }
+}

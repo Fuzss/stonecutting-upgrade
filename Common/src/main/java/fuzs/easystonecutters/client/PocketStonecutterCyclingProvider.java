@@ -1,5 +1,7 @@
 package fuzs.easystonecutters.client;
 
+import fuzs.easystonecutters.client.util.ClientRecipeHelper;
+import fuzs.easystonecutters.world.item.crafting.TransmutationInWorldRecipe;
 import fuzs.hotbarslotcycling.api.v1.client.ItemCyclingProvider;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -10,7 +12,6 @@ import net.minecraft.util.context.ContextMap;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.SelectableRecipe;
-import net.minecraft.world.item.crafting.StonecutterRecipe;
 import net.minecraft.world.item.crafting.display.SlotDisplayContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -21,7 +22,7 @@ import net.minecraft.world.phys.HitResult;
 public record PocketStonecutterCyclingProvider(ItemStack itemInHand,
                                                InteractionHand interactionHand) implements ItemCyclingProvider {
     private static Holder<Block> recipeInput = Blocks.AIR.builtInRegistryHolder();
-    private static SelectableRecipe.SingleInputSet<StonecutterRecipe> recipes = SelectableRecipe.SingleInputSet.empty();
+    private static SelectableRecipe.SingleInputSet<TransmutationInWorldRecipe> recipes = SelectableRecipe.SingleInputSet.empty();
     private static int recipeIndex;
 
     public static void onBeforeRenderGui(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
@@ -29,10 +30,7 @@ public record PocketStonecutterCyclingProvider(ItemStack itemInHand,
         Holder<Block> holder = getHighlightedBlock(minecraft.level, minecraft.hitResult);
         if (!recipeInput.is(holder)) {
             recipeInput = holder;
-            recipes = minecraft.getConnection()
-                    .recipes()
-                    .stonecutterRecipes()
-                    .selectByInput(new ItemStack(holder.value()));
+            recipes = ClientRecipeHelper.getRecipes().selectByInput(new ItemStack(holder.value()));
         }
     }
 

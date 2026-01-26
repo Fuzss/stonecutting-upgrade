@@ -1,0 +1,8 @@
+{
+  "type": "easystonecutters:transmutation_in_world",
+  "ingredient": "minecraft:gray_terracotta",
+  "result": {
+    "count": 1,
+    "id": "minecraft:orange_terracotta"
+  }
+}

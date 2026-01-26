@@ -1,0 +1,8 @@
+{
+  "type": "easystonecutters:transmutation_in_world",
+  "ingredient": "minecraft:cobblestone_stairs",
+  "result": {
+    "count": 1,
+    "id": "minecraft:stone_brick_stairs"
+  }
+}

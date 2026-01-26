@@ -1,0 +1,8 @@
+{
+  "type": "easystonecutters:transmutation_in_world",
+  "ingredient": "minecraft:blackstone_slab",
+  "result": {
+    "count": 1,
+    "id": "minecraft:polished_blackstone_slab"
+  }
+}

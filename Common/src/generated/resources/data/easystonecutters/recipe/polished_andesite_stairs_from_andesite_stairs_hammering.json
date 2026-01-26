@@ -1,0 +1,8 @@
+{
+  "type": "easystonecutters:transmutation_in_world",
+  "ingredient": "minecraft:andesite_stairs",
+  "result": {
+    "count": 1,
+    "id": "minecraft:polished_andesite_stairs"
+  }
+}

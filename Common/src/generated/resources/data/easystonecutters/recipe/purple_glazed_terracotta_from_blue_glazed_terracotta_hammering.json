@@ -1,0 +1,8 @@
+{
+  "type": "easystonecutters:transmutation_in_world",
+  "ingredient": "minecraft:blue_glazed_terracotta",
+  "result": {
+    "count": 1,
+    "id": "minecraft:purple_glazed_terracotta"
+  }
+}
