@@ -4,6 +4,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import fuzs.easystonecutters.EasyStonecutters;
 import fuzs.easystonecutters.client.gui.components.AbstractMenuSelectionList;
 import fuzs.easystonecutters.client.gui.components.RecipeImageButton;
+import fuzs.easystonecutters.config.ClientConfig;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.WidgetSprites;
@@ -40,8 +41,8 @@ public class ModStonecutterScreen extends AbstractContainerScreen<StonecutterMen
     public static final int RECIPES_IMAGE_SIZE_WIDTH = 16;
     public static final int RECIPES_IMAGE_SIZE_HEIGHT = 18;
 
+    private static ItemStack recipeInput = ItemStack.EMPTY;
     private RecipeSelectionList scrollingList;
-    private ItemStack recipeInput = ItemStack.EMPTY;
 
     public ModStonecutterScreen(StonecutterMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
@@ -75,7 +76,16 @@ public class ModStonecutterScreen extends AbstractContainerScreen<StonecutterMen
         int size = this.scrollingList.children().size();
         this.scrollingList.clearEntries();
         if (this.getMenu().hasInputItem()) {
-            this.recipeInput = this.getMenu().getSlot(StonecutterMenu.INPUT_SLOT).getItem().copyWithCount(1);
+            if (EasyStonecutters.CONFIG.get(ClientConfig.class).rememberLastRecipe) {
+                ItemStack inputItemStack = this.getMenu().getSlot(StonecutterMenu.INPUT_SLOT).getItem();
+                if (!ItemStack.isSameItemSameComponents(inputItemStack, recipeInput)) {
+                    recipeInput = inputItemStack.copyWithCount(1);
+                    RecipeImageButton.clearLastRecipeOutput();
+                }
+            } else {
+                RecipeImageButton.clearLastRecipeOutput();
+            }
+
             ContextMap contextMap = SlotDisplayContext.fromLevel(this.minecraft.level);
             List<SelectableRecipe.SingleInputEntry<StonecutterRecipe>> recipesForInput = this.getMenu()
                     .getVisibleRecipes()
@@ -107,21 +117,35 @@ public class ModStonecutterScreen extends AbstractContainerScreen<StonecutterMen
     }
 
     @Override
-    public boolean keyPressed(KeyEvent event) {
-        if (event.isSelection() && !this.recipeInput.isEmpty() && !ItemStack.isSameItemSameComponents(this.getMenu()
-                .getCarried(), this.recipeInput)) {
+    public boolean keyPressed(KeyEvent keyEvent) {
+        if (!EasyStonecutters.CONFIG.get(ClientConfig.class).quickMoveLastRecipeInput) {
+            return super.keyPressed(keyEvent);
+        }
+
+        if (keyEvent.isSelection() && !recipeInput.isEmpty()) {
             boolean hasMovedItems = false;
             Slot inputSlot = this.getMenu().getSlot(StonecutterMenu.INPUT_SLOT);
+            $1:
             if (inputSlot.getItem().getCount() < inputSlot.getMaxStackSize(inputSlot.getItem())) {
+                boolean moveAllItems = EasyStonecutters.CONFIG.get(ClientConfig.class).quickMoveAllItems.test(keyEvent);
+                if (ItemStack.isSameItemSameComponents(this.getMenu().getCarried(), recipeInput)) {
+                    hasMovedItems = true;
+                    this.refillSlotFromCarried(inputSlot, moveAllItems);
+                    if (!moveAllItems
+                            || inputSlot.getItem().getCount() >= inputSlot.getMaxStackSize(inputSlot.getItem())) {
+                        break $1;
+                    }
+                }
+
                 int size = this.getMenu().slots.size();
                 for (int i = 0; i < size; i++) {
                     Slot slot = this.getMenu().getSlot(i);
                     if (slot.hasItem() && slot.container instanceof Inventory) {
-                        if (ItemStack.isSameItemSameComponents(slot.getItem(), this.recipeInput)) {
+                        if (ItemStack.isSameItemSameComponents(slot.getItem(), recipeInput)) {
                             hasMovedItems = true;
-                            this.refillSlot(slot, inputSlot, event.hasShiftDown());
-                            if (!event.hasShiftDown() || inputSlot.getItem().getCount() >= inputSlot.getMaxStackSize(
-                                    inputSlot.getItem())) {
+                            this.refillSlotFromInventory(slot, inputSlot, moveAllItems);
+                            if (!moveAllItems || inputSlot.getItem().getCount()
+                                    >= inputSlot.getMaxStackSize(inputSlot.getItem())) {
                                 break;
                             }
                         }
@@ -135,14 +159,21 @@ public class ModStonecutterScreen extends AbstractContainerScreen<StonecutterMen
             }
         }
 
-        return super.keyPressed(event);
+        return super.keyPressed(keyEvent);
     }
 
-    private void refillSlot(Slot inventorySlot, Slot inputSlot, boolean maxAmount) {
+    private void refillSlotFromCarried(Slot inputSlot, boolean moveAllItems) {
+        this.slotClicked(inputSlot,
+                inputSlot.index,
+                moveAllItems ? InputConstants.MOUSE_BUTTON_LEFT : InputConstants.MOUSE_BUTTON_RIGHT,
+                ClickType.PICKUP);
+    }
+
+    private void refillSlotFromInventory(Slot inventorySlot, Slot inputSlot, boolean moveAllItems) {
         this.slotClicked(inventorySlot, inventorySlot.index, InputConstants.MOUSE_BUTTON_LEFT, ClickType.PICKUP);
         this.slotClicked(inputSlot,
                 inputSlot.index,
-                maxAmount ? InputConstants.MOUSE_BUTTON_LEFT : InputConstants.MOUSE_BUTTON_RIGHT,
+                moveAllItems ? InputConstants.MOUSE_BUTTON_LEFT : InputConstants.MOUSE_BUTTON_RIGHT,
                 ClickType.PICKUP);
         this.slotClicked(inventorySlot, inventorySlot.index, InputConstants.MOUSE_BUTTON_LEFT, ClickType.PICKUP);
     }

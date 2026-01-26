@@ -23,7 +23,10 @@ import java.util.List;
  * screen width.
  * <p>
  * Also, the scroll bar is mostly handled separately and is placed outside the bounds of the actual list.
+ * <p>
+ * TODO replace with implementation from Puzzles Lib
  */
+@Deprecated
 public abstract class AbstractMenuSelectionList<E extends AbstractMenuSelectionList.Entry<E>> extends ContainerObjectSelectionList<E> {
     public static final WidgetSprites SCROLLER_SPRITES = new WidgetSprites(Identifier.withDefaultNamespace(
             "container/creative_inventory/scroller"),

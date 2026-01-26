@@ -1,6 +1,8 @@
 package fuzs.easystonecutters.client.gui.components;
 
+import fuzs.easystonecutters.EasyStonecutters;
 import fuzs.easystonecutters.client.gui.screens.inventory.ModStonecutterScreen;
+import fuzs.easystonecutters.config.ClientConfig;
 import fuzs.puzzleslib.api.client.gui.v2.tooltip.TooltipBuilder;
 import fuzs.puzzleslib.api.client.gui.v2.tooltip.TooltipRenderHelper;
 import net.minecraft.client.Minecraft;
@@ -40,17 +42,23 @@ public class RecipeImageButton extends ImageButton {
                             DefaultTooltipPositioner.INSTANCE : clientTooltipPositioner;
                 })
                 .build(this);
-        if (this.menu.getSelectedRecipeIndex() == recipeIndex || ItemStack.isSameItemSameComponents(recipeOutput,
-                lastRecipeOutput)) {
-            this.active = false;
-            if (this.menu.getSelectedRecipeIndex() != recipeIndex) {
-                // When the recipe input update, this runs immediately, before the server is notified and has a chance to refresh the recipes for the new input.
-                // So this must run deferred, so the server has the correct recipes set up already which can then be selected.
-                Minecraft.getInstance().schedule(() -> {
-                    this.selectRecipe(recipeIndex, false);
-                });
+        if (EasyStonecutters.CONFIG.get(ClientConfig.class).rememberLastRecipe) {
+            if (this.menu.getSelectedRecipeIndex() == recipeIndex || ItemStack.isSameItemSameComponents(recipeOutput,
+                    lastRecipeOutput)) {
+                this.active = false;
+                if (this.menu.getSelectedRecipeIndex() != recipeIndex) {
+                    // When the recipe input update, this runs immediately, before the server is notified and has a chance to refresh the recipes for the new input.
+                    // So this must run deferred, so the server has the correct recipes set up already which can then be selected.
+                    Minecraft.getInstance().schedule(() -> {
+                        this.selectRecipe(recipeIndex, false);
+                    });
+                }
             }
         }
+    }
+
+    public static void clearLastRecipeOutput() {
+        lastRecipeOutput = ItemStack.EMPTY;
     }
 
     private boolean selectRecipe(int index, boolean playSound) {
