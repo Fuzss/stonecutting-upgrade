@@ -14,7 +14,7 @@ public class ModModelProvider extends AbstractModelProvider {
 
     @Override
     public void addItemModels(ItemModelGenerators itemModelGenerators) {
-        itemModelGenerators.generateFlatItem(ModRegistry.POCKET_STONECUTTER_ITEM.value(),
+        itemModelGenerators.generateFlatItem(ModRegistry.MASONRY_HAMMER_ITEM.value(),
                 ModelTemplates.FLAT_HANDHELD_ITEM);
     }
 }

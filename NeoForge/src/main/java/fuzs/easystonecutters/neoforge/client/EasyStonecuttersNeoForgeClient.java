@@ -3,7 +3,7 @@ package fuzs.easystonecutters.neoforge.client;
 import com.mojang.blaze3d.vertex.PoseStack;
 import fuzs.easystonecutters.EasyStonecutters;
 import fuzs.easystonecutters.client.EasyStonecuttersClient;
-import fuzs.easystonecutters.client.handler.TransmutateShapeRenderingHandler;
+import fuzs.easystonecutters.client.handler.OutlineShapeRenderingHandler;
 import fuzs.easystonecutters.client.util.ClientRecipeHelper;
 import fuzs.easystonecutters.data.client.ModLanguageProvider;
 import fuzs.easystonecutters.data.client.ModModelProvider;
@@ -41,12 +41,12 @@ public class EasyStonecuttersNeoForgeClient {
             ClientRecipeHelper.setRecipeMap(RecipeMap.EMPTY);
         });
         eventBus.addListener((final ExtractBlockOutlineRenderStateEvent event) -> {
-            VoxelShape voxelShape = TransmutateShapeRenderingHandler.getOutlineShape(event.getLevel(),
+            VoxelShape voxelShape = OutlineShapeRenderingHandler.getOutlineShape(event.getLevel(),
                     event.getHitResult(),
                     event.getCamera());
             if (voxelShape != null) {
                 event.addCustomRenderer((BlockOutlineRenderState renderState, MultiBufferSource.BufferSource bufferSource, PoseStack poseStack, boolean isTranslucentPass, LevelRenderState levelRenderState) -> {
-                    TransmutateShapeRenderingHandler.renderLines(poseStack,
+                    OutlineShapeRenderingHandler.renderLines(poseStack,
                             bufferSource,
                             levelRenderState.cameraRenderState.pos,
                             voxelShape);

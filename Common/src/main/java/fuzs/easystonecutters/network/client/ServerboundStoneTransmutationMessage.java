@@ -52,7 +52,7 @@ public record ServerboundStoneTransmutationMessage(int selectedItemStack,
                         .handleSetCarriedItem(new ServerboundSetCarriedItemPacket(ServerboundStoneTransmutationMessage.this.selectedItemStack));
                 ItemStack itemInHand = context.player()
                         .getItemInHand(ServerboundStoneTransmutationMessage.this.interactionHand);
-                if (itemInHand.is(ModRegistry.POCKET_STONECUTTER_ITEM.value())) {
+                if (itemInHand.is(ModRegistry.MASONRY_HAMMER_ITEM.value())) {
                     TransmutationInWorldRecipe recipe = context.level()
                             .recipeAccess()
                             .byKey(ServerboundStoneTransmutationMessage.this.recipe)

@@ -11,6 +11,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.context.ContextMap;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.SelectableRecipe;
 import net.minecraft.world.item.crafting.display.SlotDisplayContext;
 import net.minecraft.world.level.Level;
@@ -18,6 +19,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import org.jetbrains.annotations.Nullable;
 
 public record PocketStonecutterCyclingProvider(ItemStack itemInHand,
                                                InteractionHand interactionHand) implements ItemCyclingProvider {
@@ -59,8 +61,17 @@ public record PocketStonecutterCyclingProvider(ItemStack itemInHand,
 
     private ItemStack getRecipeOutput(int recipeIndex) {
         ContextMap contextMap = SlotDisplayContext.fromLevel(Minecraft.getInstance().level);
+        SelectableRecipe<TransmutationInWorldRecipe> recipe = getRecipeByIndex(recipeIndex);
+        return recipe.optionDisplay().resolveForFirstStack(contextMap);
+    }
+
+    public static @Nullable RecipeHolder<TransmutationInWorldRecipe> getSelectedRecipeHolder() {
+        return recipes.isEmpty() ? null : getRecipeByIndex(recipeIndex).recipe().orElseThrow();
+    }
+
+    private static SelectableRecipe<TransmutationInWorldRecipe> getRecipeByIndex(int recipeIndex) {
         int wrappedRecipeIndex = Mth.positiveModulo(recipeIndex, recipes.size());
-        return recipes.entries().get(wrappedRecipeIndex).recipe().optionDisplay().resolveForFirstStack(contextMap);
+        return recipes.entries().get(wrappedRecipeIndex).recipe();
     }
 
     @Override

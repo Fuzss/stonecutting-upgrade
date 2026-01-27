@@ -70,7 +70,7 @@ public final class TransmutationInWorldRecipe extends SingleItemRecipe {
     public List<RecipeDisplay> display() {
         return List.of(new StonecutterRecipeDisplay(this.input().display(),
                 this.resultDisplay(),
-                new SlotDisplay.ItemSlotDisplay(ModRegistry.POCKET_STONECUTTER_ITEM)));
+                new SlotDisplay.ItemSlotDisplay(ModRegistry.MASONRY_HAMMER_ITEM)));
     }
 
     public SlotDisplay resultDisplay() {

@@ -18,10 +18,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 
-public class PocketStonecutterItem extends Item {
+public class MasonryHammerItem extends Item {
     private static final Component CONTAINER_TITLE = Component.translatable("container.stonecutter");
 
-    public PocketStonecutterItem(Properties properties) {
+    public MasonryHammerItem(Properties properties) {
         super(properties);
     }
 
@@ -34,7 +34,7 @@ public class PocketStonecutterItem extends Item {
                         ContainerLevelAccess.create(serverLevel, playerX.blockPosition())) {
                     @Override
                     public boolean stillValid(Player player) {
-                        return player.isAlive() && player.getItemInHand(interactionHand).is(PocketStonecutterItem.this);
+                        return player.isAlive() && player.getItemInHand(interactionHand).is(MasonryHammerItem.this);
                     }
                 };
             }, CONTAINER_TITLE));

@@ -2,7 +2,7 @@ package fuzs.easystonecutters.client;
 
 import fuzs.easystonecutters.client.gui.screens.inventory.ModStonecutterScreen;
 import fuzs.easystonecutters.client.handler.StoneTransmuteHandler;
-import fuzs.easystonecutters.client.handler.TransmutateShapeRenderingHandler;
+import fuzs.easystonecutters.client.handler.OutlineShapeRenderingHandler;
 import fuzs.easystonecutters.client.renderer.rendertype.ModRenderTypes;
 import fuzs.easystonecutters.init.ModRegistry;
 import fuzs.hotbarslotcycling.api.v1.client.SlotCyclingProvider;
@@ -27,14 +27,14 @@ public class EasyStonecuttersClient implements ClientModConstructor {
     private static void registerEventHandlers() {
         ScreenOpeningCallback.EVENT.register(EasyStonecuttersClient::onScreenOpening);
         RenderGuiEvents.BEFORE.register(PocketStonecutterCyclingProvider::onBeforeRenderGui);
-        ClientTickEvents.END.register(TransmutateShapeRenderingHandler::onEndClientTick);
+        ClientTickEvents.END.register(OutlineShapeRenderingHandler::onEndClientTick);
 //        RenderLevelEvents.AFTER_ENTITIES.register(TransmutateShapeRenderingHandler::onRenderLevelAfterEntities);
         PlayerInteractEvents.USE_BLOCK.register(StoneTransmuteHandler::onUseBlock);
     }
 
     @Override
     public void onClientSetup() {
-        SlotCyclingProvider.registerProvider(ModRegistry.POCKET_STONECUTTER_ITEM.value(),
+        SlotCyclingProvider.registerProvider(ModRegistry.MASONRY_HAMMER_ITEM.value(),
                 PocketStonecutterCyclingProvider::new);
     }
 

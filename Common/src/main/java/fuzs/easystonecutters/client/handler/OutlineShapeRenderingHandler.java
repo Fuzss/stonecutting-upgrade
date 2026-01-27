@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import fuzs.easystonecutters.client.renderer.rendertype.ModRenderTypes;
 import fuzs.easystonecutters.init.ModRegistry;
 import fuzs.easystonecutters.util.MiniumStoneHelper;
-import fuzs.easystonecutters.world.item.PocketStonecutterItem;
+import fuzs.easystonecutters.world.item.MasonryHammerItem;
 import fuzs.easystonecutters.world.item.component.SelectionMode;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -23,27 +23,27 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class TransmutateShapeRenderingHandler {
+public class OutlineShapeRenderingHandler {
     @Nullable
-    private static BlockWalker blockWalker;
+    private static HighlightedBlocksHolder blockWalker;
 
-    public static @Nullable VoxelShape getOutlineShape(ClientLevel level, BlockHitResult hitResult, Camera camera) {
+    public static @Nullable VoxelShape getOutlineShape(ClientLevel clientLevel, BlockHitResult hitResult, Camera camera) {
         if (camera.entity() instanceof Player player) {
             InteractionHand interactionHand = MiniumStoneHelper.getHandHoldingItem(player,
-                    ModRegistry.POCKET_STONECUTTER_ITEM.value());
+                    ModRegistry.MASONRY_HAMMER_ITEM.value());
             if (interactionHand != null) {
                 ItemStack itemInHand = player.getItemInHand(interactionHand);
-                int charge = PocketStonecutterItem.getCharge(itemInHand);
-                SelectionMode selectionMode = PocketStonecutterItem.getSelectionMode(itemInHand);
-                BlockWalker blockWalker = TransmutateShapeRenderingHandler.blockWalker;
-                if (blockWalker == null || !blockWalker.stillValid(charge, selectionMode, hitResult, level)) {
-                    TransmutateShapeRenderingHandler.blockWalker = blockWalker = BlockWalker.fromHitResult(charge,
+                int charge = MasonryHammerItem.getCharge(itemInHand);
+                SelectionMode selectionMode = MasonryHammerItem.getSelectionMode(itemInHand);
+                HighlightedBlocksHolder blockWalker = OutlineShapeRenderingHandler.blockWalker;
+                if (blockWalker == null || !blockWalker.stillValid(charge, selectionMode, hitResult, clientLevel)) {
+                    OutlineShapeRenderingHandler.blockWalker = blockWalker = HighlightedBlocksHolder.fromHitResult(charge,
                             selectionMode,
                             hitResult,
-                            level);
+                            clientLevel);
                 }
 
-                return blockWalker.getJoinedShape(level);
+                return blockWalker.getJoinedShape(clientLevel);
             }
         }
 
@@ -81,7 +81,7 @@ public class TransmutateShapeRenderingHandler {
     }
 
     @Nullable
-    public static BlockWalker getBlockWalker() {
+    public static HighlightedBlocksHolder getBlockWalker() {
         return blockWalker;
     }
 

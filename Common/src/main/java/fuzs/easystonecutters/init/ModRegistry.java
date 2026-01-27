@@ -2,7 +2,7 @@ package fuzs.easystonecutters.init;
 
 import com.mojang.serialization.Codec;
 import fuzs.easystonecutters.EasyStonecutters;
-import fuzs.easystonecutters.world.item.PocketStonecutterItem;
+import fuzs.easystonecutters.world.item.MasonryHammerItem;
 import fuzs.easystonecutters.world.item.component.SelectionMode;
 import fuzs.easystonecutters.world.item.crafting.TransmutationInWorldRecipe;
 import fuzs.easystonecutters.world.item.crafting.display.BlockSlotDisplay;
@@ -37,11 +37,10 @@ public class ModRegistry {
             (DataComponentType.Builder<SelectionMode> builder) -> {
                 return builder.persistent(SelectionMode.CODEC).networkSynchronized(SelectionMode.STREAM_CODEC);
             });
-    public static final Holder.Reference<Item> POCKET_STONECUTTER_ITEM = REGISTRIES.registerItem("pocket_stonecutter",
-            PocketStonecutterItem::new,
+    public static final Holder.Reference<Item> MASONRY_HAMMER_ITEM = REGISTRIES.registerItem("masonry_hammer",
+            MasonryHammerItem::new,
             () -> {
-                return new Item.Properties().durability(1521)
-                        .rarity(Rarity.UNCOMMON)
+                return new Item.Properties().durability(768)
                         .component(CHARGE_DATA_COMPONENT_TYPE.value(), (byte) 2)
                         .component(SELECTION_DATA_COMPONENT_TYPE.value(), SelectionMode.FLAT);
             });

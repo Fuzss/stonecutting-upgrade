@@ -12,6 +12,6 @@ public class ModLanguageProvider extends AbstractLanguageProvider {
 
     @Override
     public void addTranslations(TranslationBuilder translationBuilder) {
-        translationBuilder.add(ModRegistry.POCKET_STONECUTTER_ITEM.value(), "Pocket Stonecutter");
+        translationBuilder.add(ModRegistry.MASONRY_HAMMER_ITEM.value(), "Masonry Hammer");
     }
 }

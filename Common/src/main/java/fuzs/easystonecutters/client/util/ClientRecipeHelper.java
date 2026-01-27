@@ -21,8 +21,9 @@ public class ClientRecipeHelper {
         } else {
             Collection<RecipeHolder<TransmutationInWorldRecipe>> recipeHolders = recipeMap.byType(ModRegistry.TRANSMUTATION_IN_WORLD_RECIPE_TYPE.value());
             List<SelectableRecipe.SingleInputEntry<TransmutationInWorldRecipe>> recipes = recipeHolders.stream()
-                    .map(holder -> (new SelectableRecipe.SingleInputEntry<>(holder.value().input(),
-                            new SelectableRecipe<>(holder.value().resultDisplay(), Optional.of(holder)))))
+                    .map((RecipeHolder<TransmutationInWorldRecipe> holder) -> new SelectableRecipe.SingleInputEntry<>(
+                            holder.value().input(),
+                            new SelectableRecipe<>(holder.value().resultDisplay(), Optional.of(holder))))
                     .toList();
             syncedRecipes = new SelectableRecipe.SingleInputSet<>(recipes);
         }

@@ -2,7 +2,7 @@ package fuzs.easystonecutters.fabric.client;
 
 import fuzs.easystonecutters.EasyStonecutters;
 import fuzs.easystonecutters.client.EasyStonecuttersClient;
-import fuzs.easystonecutters.client.handler.TransmutateShapeRenderingHandler;
+import fuzs.easystonecutters.client.handler.OutlineShapeRenderingHandler;
 import fuzs.easystonecutters.client.util.ClientRecipeHelper;
 import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.fabric.api.client.event.v1.FabricClientPlayerEvents;
@@ -46,7 +46,7 @@ public class EasyStonecuttersFabricClient implements ClientModInitializer {
         WorldRenderEvents.AFTER_BLOCK_OUTLINE_EXTRACTION.register((WorldExtractionContext context, @Nullable HitResult hitResult) -> {
             BlockOutlineRenderState blockOutlineRenderState = context.worldState().blockOutlineRenderState;
             if (blockOutlineRenderState != null && hitResult != null && hitResult.getType() == HitResult.Type.BLOCK) {
-                VoxelShape voxelShape = TransmutateShapeRenderingHandler.getOutlineShape(context.world(),
+                VoxelShape voxelShape = OutlineShapeRenderingHandler.getOutlineShape(context.world(),
                         (BlockHitResult) hitResult,
                         context.camera());
                 if (voxelShape != null) {
@@ -57,7 +57,7 @@ public class EasyStonecuttersFabricClient implements ClientModInitializer {
         WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register((WorldRenderContext context, BlockOutlineRenderState outlineRenderState) -> {
             VoxelShape voxelShape = outlineRenderState.getDataOrDefault(OUTLINE_SHAPE_DATA_KEY, Shapes.empty());
             if (!voxelShape.isEmpty()) {
-                TransmutateShapeRenderingHandler.renderLines(context.matrices(),
+                OutlineShapeRenderingHandler.renderLines(context.matrices(),
                         (MultiBufferSource.BufferSource) context.consumers(),
                         context.worldState().cameraRenderState.pos,
                         voxelShape);

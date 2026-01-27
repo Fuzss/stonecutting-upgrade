@@ -22,14 +22,14 @@ public class StoneTransmuteHandler {
 
     public static EventResultHolder<InteractionResult> onUseBlock(Player player, Level level, InteractionHand interactionHand, BlockHitResult hitResult) {
         ItemStack itemInHand = player.getItemInHand(interactionHand);
-        if (itemInHand.is(ModRegistry.POCKET_STONECUTTER_ITEM.value()) && level.isClientSide()) {
-            BlockWalker blockWalker = TransmutateShapeRenderingHandler.getBlockWalker();
+        if (itemInHand.is(ModRegistry.MASONRY_HAMMER_ITEM.value()) && level.isClientSide()) {
+            HighlightedBlocksHolder blockWalker = OutlineShapeRenderingHandler.getBlockWalker();
             if (blockWalker != null) {
                 boolean isReversed = player.isSecondaryUseActive();
                 RecipeHolder<TransmutationInWorldRecipe> holder = blockWalker.getRecipe();
                 if (holder != null) {
                     BlockPos blockPos = blockWalker.getBlockPos();
-                    List<BlockPos> blocks = blockWalker.getBlocks(level);
+                    List<BlockPos> blocks = blockWalker.getBlocksForRecipe(level);
                     TransmutationInWorldRecipe recipe = holder.value();
                     Block ingredient = isReversed ? recipe.getBlockResult() : recipe.getBlockIngredient();
                     Block result = isReversed ? recipe.getBlockIngredient() : recipe.getBlockResult();
@@ -41,8 +41,7 @@ public class StoneTransmuteHandler {
                             blocks,
                             isReversed,
                             holder.id()));
-                    TransmutateShapeRenderingHandler.clearBlockWalker();
-//                    TransmutationResultGuiHandler.setBlockPopTime(5);
+                    OutlineShapeRenderingHandler.clearBlockWalker();
                     return EventResultHolder.interrupt(InteractionResult.SUCCESS);
                 }
             }

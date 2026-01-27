@@ -33,7 +33,7 @@ public class EasyStonecutters implements ModConstructor {
     private static void registerEventHandlers() {
         BuildCreativeModeTabContentsCallback.buildCreativeModeTabContents(CreativeModeTabs.TOOLS_AND_UTILITIES)
                 .register((CreativeModeTab creativeModeTab, CreativeModeTab.ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output output) -> {
-                    output.accept(ModRegistry.POCKET_STONECUTTER_ITEM.value());
+                    output.accept(ModRegistry.MASONRY_HAMMER_ITEM.value());
                 });
     }
 
