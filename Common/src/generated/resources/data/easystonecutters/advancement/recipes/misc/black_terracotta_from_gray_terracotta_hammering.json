@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:black_terracotta_from_gray_terracotta_hammering"
+        "recipe": "easystonecutters:black_terracotta_from_gray_terracotta_hammering"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:black_terracotta_from_gray_terracotta_hammering"
+      "easystonecutters:black_terracotta_from_gray_terracotta_hammering"
     ]
   }
 }

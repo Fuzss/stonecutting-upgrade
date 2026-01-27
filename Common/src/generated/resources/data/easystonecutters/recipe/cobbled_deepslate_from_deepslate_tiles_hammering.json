@@ -1,8 +1,5 @@
 {
-  "type": "easystonecutters:transmutation_in_world",
-  "ingredient": "minecraft:deepslate_tiles",
-  "result": {
-    "count": 1,
-    "id": "minecraft:cobbled_deepslate"
-  }
+  "type": "easystonecutters:hammering",
+  "input": "minecraft:deepslate_tiles",
+  "result": "minecraft:cobbled_deepslate"
 }

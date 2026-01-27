@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:cracked_stone_bricks_from_stone_hammering"
+        "recipe": "easystonecutters:cracked_stone_bricks_from_stone_hammering"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:cracked_stone_bricks_from_stone_hammering"
+      "easystonecutters:cracked_stone_bricks_from_stone_hammering"
     ]
   }
 }

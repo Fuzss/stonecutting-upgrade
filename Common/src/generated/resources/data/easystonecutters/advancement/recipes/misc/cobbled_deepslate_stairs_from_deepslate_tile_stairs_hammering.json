@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:cobbled_deepslate_stairs_from_deepslate_tile_stairs_hammering"
+        "recipe": "easystonecutters:cobbled_deepslate_stairs_from_deepslate_tile_stairs_hammering"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:cobbled_deepslate_stairs_from_deepslate_tile_stairs_hammering"
+      "easystonecutters:cobbled_deepslate_stairs_from_deepslate_tile_stairs_hammering"
     ]
   }
 }

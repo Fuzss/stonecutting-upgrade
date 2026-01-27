@@ -1,8 +1,0 @@
-{
-  "type": "easystonecutters:transmutation_in_world",
-  "ingredient": "minecraft:mossy_cobblestone",
-  "result": {
-    "count": 1,
-    "id": "minecraft:chiseled_stone_bricks"
-  }
-}

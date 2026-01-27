@@ -1,8 +1,5 @@
 {
-  "type": "easystonecutters:transmutation_in_world",
-  "ingredient": "minecraft:stone_stairs",
-  "result": {
-    "count": 1,
-    "id": "minecraft:stone_brick_stairs"
-  }
+  "type": "easystonecutters:hammering",
+  "input": "minecraft:stone_stairs",
+  "result": "minecraft:stone_brick_stairs"
 }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:red_terracotta_from_light_blue_terracotta_hammering"
+        "recipe": "easystonecutters:red_terracotta_from_light_blue_terracotta_hammering"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:red_terracotta_from_light_blue_terracotta_hammering"
+      "easystonecutters:red_terracotta_from_light_blue_terracotta_hammering"
     ]
   }
 }

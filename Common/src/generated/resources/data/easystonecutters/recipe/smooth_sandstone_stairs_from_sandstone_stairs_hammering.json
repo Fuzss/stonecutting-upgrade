@@ -1,8 +1,5 @@
 {
-  "type": "easystonecutters:transmutation_in_world",
-  "ingredient": "minecraft:sandstone_stairs",
-  "result": {
-    "count": 1,
-    "id": "minecraft:smooth_sandstone_stairs"
-  }
+  "type": "easystonecutters:hammering",
+  "input": "minecraft:sandstone_stairs",
+  "result": "minecraft:smooth_sandstone_stairs"
 }

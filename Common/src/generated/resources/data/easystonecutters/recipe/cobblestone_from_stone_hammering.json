@@ -1,8 +1,5 @@
 {
-  "type": "easystonecutters:transmutation_in_world",
-  "ingredient": "minecraft:stone",
-  "result": {
-    "count": 1,
-    "id": "minecraft:cobblestone"
-  }
+  "type": "easystonecutters:hammering",
+  "input": "minecraft:stone",
+  "result": "minecraft:cobblestone"
 }

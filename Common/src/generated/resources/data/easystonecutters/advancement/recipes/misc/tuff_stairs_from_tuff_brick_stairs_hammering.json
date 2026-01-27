@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:tuff_stairs_from_tuff_brick_stairs_hammering"
+        "recipe": "easystonecutters:tuff_stairs_from_tuff_brick_stairs_hammering"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:tuff_stairs_from_tuff_brick_stairs_hammering"
+      "easystonecutters:tuff_stairs_from_tuff_brick_stairs_hammering"
     ]
   }
 }

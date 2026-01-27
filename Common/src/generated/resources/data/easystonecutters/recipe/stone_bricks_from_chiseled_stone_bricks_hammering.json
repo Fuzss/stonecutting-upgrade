@@ -1,8 +1,5 @@
 {
-  "type": "easystonecutters:transmutation_in_world",
-  "ingredient": "minecraft:chiseled_stone_bricks",
-  "result": {
-    "count": 1,
-    "id": "minecraft:stone_bricks"
-  }
+  "type": "easystonecutters:hammering",
+  "input": "minecraft:chiseled_stone_bricks",
+  "result": "minecraft:stone_bricks"
 }

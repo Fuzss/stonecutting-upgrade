@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:chiseled_stone_bricks_from_stone_bricks_hammering"
+        "recipe": "easystonecutters:chiseled_stone_bricks_from_stone_bricks_hammering"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:chiseled_stone_bricks_from_stone_bricks_hammering"
+      "easystonecutters:chiseled_stone_bricks_from_stone_bricks_hammering"
     ]
   }
 }

@@ -1,7 +1,8 @@
 package fuzs.easystonecutters.neoforge;
 
 import fuzs.easystonecutters.EasyStonecutters;
-import fuzs.easystonecutters.data.recipes.ModRecipeProvider;
+import fuzs.easystonecutters.data.ModRecipeProvider;
+import fuzs.easystonecutters.data.tags.ModItemTagsProvider;
 import fuzs.easystonecutters.init.ModRegistry;
 import fuzs.puzzleslib.api.core.v1.ModConstructor;
 import fuzs.puzzleslib.neoforge.api.data.v2.core.DataProviderHelper;
@@ -16,12 +17,15 @@ public class EasyStonecuttersNeoForge {
     public EasyStonecuttersNeoForge() {
         ModConstructor.construct(EasyStonecutters.MOD_ID, EasyStonecutters::new);
         registerEventHandlers(NeoForge.EVENT_BUS);
-        DataProviderHelper.registerDataProviders(EasyStonecutters.MOD_ID, ModRecipeProvider::new);
+        DataProviderHelper.registerDataProviders(EasyStonecutters.MOD_ID,
+                ModRegistry.REGISTRY_SET_BUILDER,
+                ModItemTagsProvider::new,
+                ModRecipeProvider::new);
     }
 
     private static void registerEventHandlers(IEventBus eventBus) {
         eventBus.addListener((final OnDatapackSyncEvent event) -> {
-            event.sendRecipes(ModRegistry.TRANSMUTATION_IN_WORLD_RECIPE_TYPE.value());
+            event.sendRecipes(ModRegistry.HAMMERING_RECIPE_TYPE.value());
         });
     }
 }

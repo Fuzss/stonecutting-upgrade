@@ -1,8 +1,5 @@
 {
-  "type": "easystonecutters:transmutation_in_world",
-  "ingredient": "minecraft:cut_red_sandstone",
-  "result": {
-    "count": 1,
-    "id": "minecraft:red_sandstone"
-  }
+  "type": "easystonecutters:hammering",
+  "input": "minecraft:cut_red_sandstone",
+  "result": "minecraft:red_sandstone"
 }

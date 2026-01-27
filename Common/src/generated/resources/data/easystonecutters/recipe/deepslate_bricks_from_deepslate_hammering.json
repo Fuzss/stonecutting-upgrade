@@ -1,8 +1,5 @@
 {
-  "type": "easystonecutters:transmutation_in_world",
-  "ingredient": "minecraft:deepslate",
-  "result": {
-    "count": 1,
-    "id": "minecraft:deepslate_bricks"
-  }
+  "type": "easystonecutters:hammering",
+  "input": "minecraft:deepslate",
+  "result": "minecraft:deepslate_bricks"
 }

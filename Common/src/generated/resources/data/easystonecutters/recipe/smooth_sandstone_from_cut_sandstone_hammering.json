@@ -1,8 +1,5 @@
 {
-  "type": "easystonecutters:transmutation_in_world",
-  "ingredient": "minecraft:cut_sandstone",
-  "result": {
-    "count": 1,
-    "id": "minecraft:smooth_sandstone"
-  }
+  "type": "easystonecutters:hammering",
+  "input": "minecraft:cut_sandstone",
+  "result": "minecraft:smooth_sandstone"
 }

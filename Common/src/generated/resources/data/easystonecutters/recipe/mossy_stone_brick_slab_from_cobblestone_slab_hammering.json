@@ -1,8 +1,0 @@
-{
-  "type": "easystonecutters:transmutation_in_world",
-  "ingredient": "minecraft:cobblestone_slab",
-  "result": {
-    "count": 1,
-    "id": "minecraft:mossy_stone_brick_slab"
-  }
-}

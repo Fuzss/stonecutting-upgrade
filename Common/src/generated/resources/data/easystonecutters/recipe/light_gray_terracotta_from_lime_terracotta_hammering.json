@@ -1,8 +1,5 @@
 {
-  "type": "easystonecutters:transmutation_in_world",
-  "ingredient": "minecraft:lime_terracotta",
-  "result": {
-    "count": 1,
-    "id": "minecraft:light_gray_terracotta"
-  }
+  "type": "easystonecutters:hammering",
+  "input": "minecraft:lime_terracotta",
+  "result": "minecraft:light_gray_terracotta"
 }

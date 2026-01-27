@@ -1,8 +1,5 @@
 {
-  "type": "easystonecutters:transmutation_in_world",
-  "ingredient": "minecraft:polished_tuff",
-  "result": {
-    "count": 1,
-    "id": "minecraft:chiseled_tuff"
-  }
+  "type": "easystonecutters:hammering",
+  "input": "minecraft:polished_tuff",
+  "result": "minecraft:chiseled_tuff"
 }

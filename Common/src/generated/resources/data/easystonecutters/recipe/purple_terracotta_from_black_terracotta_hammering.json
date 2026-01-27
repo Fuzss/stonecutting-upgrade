@@ -1,8 +1,5 @@
 {
-  "type": "easystonecutters:transmutation_in_world",
-  "ingredient": "minecraft:black_terracotta",
-  "result": {
-    "count": 1,
-    "id": "minecraft:purple_terracotta"
-  }
+  "type": "easystonecutters:hammering",
+  "input": "minecraft:black_terracotta",
+  "result": "minecraft:purple_terracotta"
 }

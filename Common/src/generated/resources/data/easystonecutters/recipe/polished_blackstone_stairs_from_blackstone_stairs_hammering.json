@@ -1,8 +1,5 @@
 {
-  "type": "easystonecutters:transmutation_in_world",
-  "ingredient": "minecraft:blackstone_stairs",
-  "result": {
-    "count": 1,
-    "id": "minecraft:polished_blackstone_stairs"
-  }
+  "type": "easystonecutters:hammering",
+  "input": "minecraft:blackstone_stairs",
+  "result": "minecraft:polished_blackstone_stairs"
 }

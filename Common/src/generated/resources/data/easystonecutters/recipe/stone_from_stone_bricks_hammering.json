@@ -1,8 +1,5 @@
 {
-  "type": "easystonecutters:transmutation_in_world",
-  "ingredient": "minecraft:stone_bricks",
-  "result": {
-    "count": 1,
-    "id": "minecraft:stone"
-  }
+  "type": "easystonecutters:hammering",
+  "input": "minecraft:stone_bricks",
+  "result": "minecraft:stone"
 }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:sandstone_from_smooth_sandstone_hammering"
+        "recipe": "easystonecutters:sandstone_from_smooth_sandstone_hammering"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:sandstone_from_smooth_sandstone_hammering"
+      "easystonecutters:sandstone_from_smooth_sandstone_hammering"
     ]
   }
 }

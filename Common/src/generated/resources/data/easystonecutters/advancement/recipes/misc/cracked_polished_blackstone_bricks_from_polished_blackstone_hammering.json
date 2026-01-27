@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:cracked_polished_blackstone_bricks_from_polished_blackstone_hammering"
+        "recipe": "easystonecutters:cracked_polished_blackstone_bricks_from_polished_blackstone_hammering"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:cracked_polished_blackstone_bricks_from_polished_blackstone_hammering"
+      "easystonecutters:cracked_polished_blackstone_bricks_from_polished_blackstone_hammering"
     ]
   }
 }

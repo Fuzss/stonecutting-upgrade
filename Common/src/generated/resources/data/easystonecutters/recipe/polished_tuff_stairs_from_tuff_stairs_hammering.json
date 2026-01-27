@@ -1,8 +1,5 @@
 {
-  "type": "easystonecutters:transmutation_in_world",
-  "ingredient": "minecraft:tuff_stairs",
-  "result": {
-    "count": 1,
-    "id": "minecraft:polished_tuff_stairs"
-  }
+  "type": "easystonecutters:hammering",
+  "input": "minecraft:tuff_stairs",
+  "result": "minecraft:polished_tuff_stairs"
 }

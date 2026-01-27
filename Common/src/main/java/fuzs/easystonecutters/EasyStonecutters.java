@@ -3,8 +3,8 @@ package fuzs.easystonecutters;
 import fuzs.easystonecutters.config.ClientConfig;
 import fuzs.easystonecutters.config.ServerConfig;
 import fuzs.easystonecutters.init.ModRegistry;
-import fuzs.easystonecutters.network.ClientboundTransmutationParticleMessage;
-import fuzs.easystonecutters.network.client.ServerboundStoneTransmutationMessage;
+import fuzs.easystonecutters.network.ClientboundDestroyBlockEffectMessage;
+import fuzs.easystonecutters.network.client.ServerboundUseHammerMessage;
 import fuzs.puzzleslib.api.config.v3.ConfigHolder;
 import fuzs.puzzleslib.api.core.v1.ModConstructor;
 import fuzs.puzzleslib.api.core.v1.context.PayloadTypesContext;
@@ -39,10 +39,9 @@ public class EasyStonecutters implements ModConstructor {
 
     @Override
     public void onRegisterPayloadTypes(PayloadTypesContext context) {
-        context.playToServer(ServerboundStoneTransmutationMessage.class,
-                ServerboundStoneTransmutationMessage.STREAM_CODEC);
-        context.playToClient(ClientboundTransmutationParticleMessage.class,
-                ClientboundTransmutationParticleMessage.STREAM_CODEC);
+        context.playToServer(ServerboundUseHammerMessage.class, ServerboundUseHammerMessage.STREAM_CODEC);
+        context.playToClient(ClientboundDestroyBlockEffectMessage.class,
+                ClientboundDestroyBlockEffectMessage.STREAM_CODEC);
     }
 
     public static Identifier id(String path) {

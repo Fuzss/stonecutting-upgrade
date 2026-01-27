@@ -1,8 +1,5 @@
 {
-  "type": "easystonecutters:transmutation_in_world",
-  "ingredient": "minecraft:smooth_basalt",
-  "result": {
-    "count": 1,
-    "id": "minecraft:polished_basalt"
-  }
+  "type": "easystonecutters:hammering",
+  "input": "minecraft:smooth_basalt",
+  "result": "minecraft:polished_basalt"
 }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:stone_from_cobblestone_hammering"
+        "recipe": "easystonecutters:stone_from_cobblestone_hammering"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:stone_from_cobblestone_hammering"
+      "easystonecutters:stone_from_cobblestone_hammering"
     ]
   }
 }

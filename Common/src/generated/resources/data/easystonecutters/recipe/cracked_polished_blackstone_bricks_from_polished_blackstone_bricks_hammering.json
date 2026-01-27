@@ -1,8 +1,5 @@
 {
-  "type": "easystonecutters:transmutation_in_world",
-  "ingredient": "minecraft:polished_blackstone_bricks",
-  "result": {
-    "count": 1,
-    "id": "minecraft:cracked_polished_blackstone_bricks"
-  }
+  "type": "easystonecutters:hammering",
+  "input": "minecraft:polished_blackstone_bricks",
+  "result": "minecraft:cracked_polished_blackstone_bricks"
 }

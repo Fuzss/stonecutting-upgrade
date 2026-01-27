@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:chiseled_tuff_from_polished_tuff_hammering"
+        "recipe": "easystonecutters:chiseled_tuff_from_polished_tuff_hammering"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:chiseled_tuff_from_polished_tuff_hammering"
+      "easystonecutters:chiseled_tuff_from_polished_tuff_hammering"
     ]
   }
 }

@@ -1,7 +1,8 @@
 package fuzs.easystonecutters.util;
 
-import fuzs.easystonecutters.network.ClientboundTransmutationParticleMessage;
-import fuzs.easystonecutters.world.item.MasonryHammerItem;
+import fuzs.easystonecutters.network.ClientboundDestroyBlockEffectMessage;
+import fuzs.easystonecutters.world.item.HammerItem;
+import fuzs.easystonecutters.world.item.crafting.HammeringRecipe;
 import fuzs.puzzleslib.api.network.v4.MessageSender;
 import fuzs.puzzleslib.api.network.v4.PlayerSet;
 import net.minecraft.core.BlockPos;
@@ -13,17 +14,15 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
 public class MiniumStoneHelper {
     private static final InteractionHand[] HAND_VALUES = InteractionHand.values();
 
-    @Nullable
-    public static InteractionHand getHandHoldingItem(Player player, Item item) {
+    public static @Nullable InteractionHand getHandHoldingItem(Player player, Item item) {
         for (InteractionHand interactionHand : HAND_VALUES) {
             ItemStack itemInHand = player.getItemInHand(interactionHand);
             if (itemInHand.is(item)) {
@@ -34,30 +33,29 @@ public class MiniumStoneHelper {
         return null;
     }
 
-    public static void transmuteBlocks(BlockPos blockPosition, List<BlockPos> blockPositions, Level level, Block ingredient, Block result, ItemStack itemInHand) {
-        int miniumStoneCharge = MasonryHammerItem.getCharge(itemInHand) * 3;
-        boolean schedulePlaySound = false;
-        for (BlockPos blockPos : blockPositions) {
-            if (blockPosition.distManhattan(blockPos) <= miniumStoneCharge) {
-                BlockState blockState = level.getBlockState(blockPos);
-                if (blockState.is(ingredient)) {
-                    level.setBlockAndUpdate(blockPos, result.withPropertiesOf(blockState));
+    public static void transmuteBlocks(Level level, Player player, ItemStack itemInHand, BlockPos clickedPosition, List<BlockPos> blockPositions, HammeringRecipe recipe) {
+        int miniumStoneCharge = HammerItem.getInteractionRange(itemInHand, player) * 3;
+        boolean hasPlayedSound = false;
+        for (BlockPos offsetPosition : blockPositions) {
+            if (clickedPosition.distManhattan(offsetPosition) <= miniumStoneCharge) {
+                BlockState blockState = level.getBlockState(offsetPosition);
+                if (recipe.matches(blockState, level)) {
+                    level.setBlockAndUpdate(offsetPosition, recipe.assemble(blockState));
                     if (level instanceof ServerLevel serverLevel) {
-                        schedulePlaySound = true;
-                        MessageSender.broadcast(PlayerSet.nearPosition(blockPos, serverLevel),
-                                new ClientboundTransmutationParticleMessage(blockPos, blockState));
+                        MessageSender.broadcast(PlayerSet.nearPosition(offsetPosition, serverLevel),
+                                new ClientboundDestroyBlockEffectMessage(offsetPosition, blockState));
+                        if (!hasPlayedSound) {
+                            hasPlayedSound = true;
+                            serverLevel.playSound(null,
+                                    clickedPosition,
+                                    SoundEvents.UI_STONECUTTER_TAKE_RESULT,
+                                    SoundSource.BLOCKS,
+                                    1.0F,
+                                    1.0F);
+                        }
                     }
                 }
             }
-        }
-
-        if (schedulePlaySound) {
-            level.playSound(null,
-                    blockPosition,
-                    SoundEvents.UI_STONECUTTER_TAKE_RESULT,
-                    SoundSource.BLOCKS,
-                    1.0F,
-                    1.0F);
         }
     }
 }

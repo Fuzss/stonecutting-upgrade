@@ -1,8 +1,5 @@
 {
-  "type": "easystonecutters:transmutation_in_world",
-  "ingredient": "minecraft:chiseled_polished_blackstone",
-  "result": {
-    "count": 1,
-    "id": "minecraft:blackstone"
-  }
+  "type": "easystonecutters:hammering",
+  "input": "minecraft:chiseled_polished_blackstone",
+  "result": "minecraft:blackstone"
 }

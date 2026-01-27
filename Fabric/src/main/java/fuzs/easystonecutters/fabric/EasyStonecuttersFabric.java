@@ -11,6 +11,6 @@ public class EasyStonecuttersFabric implements ModInitializer {
     @Override
     public void onInitialize() {
         ModConstructor.construct(EasyStonecutters.MOD_ID, EasyStonecutters::new);
-        RecipeSynchronization.synchronizeRecipeSerializer(ModRegistry.TRANSMUTATION_IN_WORLD_RECIPE_SERIALIZER.value());
+        RecipeSynchronization.synchronizeRecipeSerializer(ModRegistry.HAMMERING_RECIPE_SERIALIZER.value());
     }
 }

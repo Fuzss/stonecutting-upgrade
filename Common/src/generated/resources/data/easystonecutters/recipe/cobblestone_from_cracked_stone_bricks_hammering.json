@@ -1,8 +1,5 @@
 {
-  "type": "easystonecutters:transmutation_in_world",
-  "ingredient": "minecraft:cracked_stone_bricks",
-  "result": {
-    "count": 1,
-    "id": "minecraft:cobblestone"
-  }
+  "type": "easystonecutters:hammering",
+  "input": "minecraft:cracked_stone_bricks",
+  "result": "minecraft:cobblestone"
 }

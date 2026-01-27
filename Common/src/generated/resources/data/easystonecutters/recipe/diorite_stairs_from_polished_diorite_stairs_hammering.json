@@ -1,8 +1,5 @@
 {
-  "type": "easystonecutters:transmutation_in_world",
-  "ingredient": "minecraft:polished_diorite_stairs",
-  "result": {
-    "count": 1,
-    "id": "minecraft:diorite_stairs"
-  }
+  "type": "easystonecutters:hammering",
+  "input": "minecraft:polished_diorite_stairs",
+  "result": "minecraft:diorite_stairs"
 }

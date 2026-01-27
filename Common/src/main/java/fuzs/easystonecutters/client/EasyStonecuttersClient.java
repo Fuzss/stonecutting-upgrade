@@ -1,21 +1,31 @@
 package fuzs.easystonecutters.client;
 
 import fuzs.easystonecutters.client.gui.screens.inventory.ModStonecutterScreen;
-import fuzs.easystonecutters.client.handler.StoneTransmuteHandler;
-import fuzs.easystonecutters.client.handler.OutlineShapeRenderingHandler;
+import fuzs.easystonecutters.client.handler.HighlightedBlocksHandler;
 import fuzs.easystonecutters.client.renderer.rendertype.ModRenderTypes;
 import fuzs.easystonecutters.init.ModRegistry;
+import fuzs.easystonecutters.world.item.HammerItem;
+import fuzs.easystonecutters.world.item.component.SelectionMode;
 import fuzs.hotbarslotcycling.api.v1.client.SlotCyclingProvider;
 import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.api.client.core.v1.context.RenderPipelinesContext;
 import fuzs.puzzleslib.api.client.event.v1.ClientTickEvents;
-import fuzs.puzzleslib.api.client.event.v1.gui.RenderGuiEvents;
 import fuzs.puzzleslib.api.client.event.v1.gui.ScreenOpeningCallback;
+import fuzs.puzzleslib.api.client.gui.v2.tooltip.ItemTooltipRegistry;
 import fuzs.puzzleslib.api.event.v1.core.EventResultHolder;
 import fuzs.puzzleslib.api.event.v1.entity.player.PlayerInteractEvents;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.StonecutterScreen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import org.jspecify.annotations.Nullable;
+
+import java.util.function.Consumer;
 
 public class EasyStonecuttersClient implements ClientModConstructor {
 
@@ -26,16 +36,8 @@ public class EasyStonecuttersClient implements ClientModConstructor {
 
     private static void registerEventHandlers() {
         ScreenOpeningCallback.EVENT.register(EasyStonecuttersClient::onScreenOpening);
-        RenderGuiEvents.BEFORE.register(PocketStonecutterCyclingProvider::onBeforeRenderGui);
-        ClientTickEvents.END.register(OutlineShapeRenderingHandler::onEndClientTick);
-//        RenderLevelEvents.AFTER_ENTITIES.register(TransmutateShapeRenderingHandler::onRenderLevelAfterEntities);
-        PlayerInteractEvents.USE_BLOCK.register(StoneTransmuteHandler::onUseBlock);
-    }
-
-    @Override
-    public void onClientSetup() {
-        SlotCyclingProvider.registerProvider(ModRegistry.MASONRY_HAMMER_ITEM.value(),
-                PocketStonecutterCyclingProvider::new);
+        ClientTickEvents.END.register(HighlightedBlocksHandler::onEndClientTick);
+        PlayerInteractEvents.USE_BLOCK.register(HighlightedBlocksHandler::onUseBlock);
     }
 
     private static EventResultHolder<Screen> onScreenOpening(@Nullable Screen oldScreen, @Nullable Screen newScreen) {
@@ -45,6 +47,22 @@ public class EasyStonecuttersClient implements ClientModConstructor {
                     screen.getTitle()));
         } else {
             return EventResultHolder.pass();
+        }
+    }
+
+    @Override
+    public void onClientSetup() {
+        SlotCyclingProvider.registerProvider(ModRegistry.MASONRY_HAMMER_ITEM.value(), HammerCyclingProvider::new);
+        ItemTooltipRegistry.ITEM.registerItemTooltip(itemStack -> itemStack.is(ModRegistry.MASONRY_HAMMER_ITEM.value()),
+                EasyStonecuttersClient::appendHoverText);
+    }
+
+    private static void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, TooltipFlag tooltipFlag, @Nullable Player player, Consumer<Component> tooltipLineConsumer) {
+        if (EnchantmentHelper.has(itemStack,
+                ModRegistry.CONTROLS_SELECTION_MODE_ENCHANTMENT_EFFECT_COMPONENT_TYPE.value())) {
+            SelectionMode selectionMode = HammerItem.getSelectionMode(itemStack);
+            tooltipLineConsumer.accept(Component.translatable(HammerItem.getCurrentSelectionTranslationKey(),
+                    selectionMode.getComponent()).withStyle(ChatFormatting.GRAY));
         }
     }
 

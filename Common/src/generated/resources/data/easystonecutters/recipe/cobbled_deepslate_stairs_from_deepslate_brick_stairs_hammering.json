@@ -1,8 +1,5 @@
 {
-  "type": "easystonecutters:transmutation_in_world",
-  "ingredient": "minecraft:deepslate_brick_stairs",
-  "result": {
-    "count": 1,
-    "id": "minecraft:cobbled_deepslate_stairs"
-  }
+  "type": "easystonecutters:hammering",
+  "input": "minecraft:deepslate_brick_stairs",
+  "result": "minecraft:cobbled_deepslate_stairs"
 }

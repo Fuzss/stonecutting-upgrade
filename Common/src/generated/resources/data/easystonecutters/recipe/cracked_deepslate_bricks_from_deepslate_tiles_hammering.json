@@ -1,8 +1,5 @@
 {
-  "type": "easystonecutters:transmutation_in_world",
-  "ingredient": "minecraft:deepslate_tiles",
-  "result": {
-    "count": 1,
-    "id": "minecraft:cracked_deepslate_bricks"
-  }
+  "type": "easystonecutters:hammering",
+  "input": "minecraft:deepslate_tiles",
+  "result": "minecraft:cracked_deepslate_bricks"
 }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:chiseled_red_sandstone_from_smooth_red_sandstone_hammering"
+        "recipe": "easystonecutters:chiseled_red_sandstone_from_smooth_red_sandstone_hammering"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:chiseled_red_sandstone_from_smooth_red_sandstone_hammering"
+      "easystonecutters:chiseled_red_sandstone_from_smooth_red_sandstone_hammering"
     ]
   }
 }

@@ -1,3 +1,9 @@
 {
-  "item.easystonecutters.pocket_stonecutter": "Pocket Stonecutter"
+  "enchantment.easystonecutters.masonry_reach": "Masonry Reach",
+  "item.easystonecutters.masonry_hammer": "Masonry Hammer",
+  "item.easystonecutters.masonry_hammer.cube": "Cube",
+  "item.easystonecutters.masonry_hammer.flat": "Flat",
+  "item.easystonecutters.masonry_hammer.line": "Line",
+  "item.easystonecutters.masonry_hammer.tooltip.changed_selection": "Changed Selection Mode to %s",
+  "item.easystonecutters.masonry_hammer.tooltip.current_selection": "Selection Mode: %s"
 }

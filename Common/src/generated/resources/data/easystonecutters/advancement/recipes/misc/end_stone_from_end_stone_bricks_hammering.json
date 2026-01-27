@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:end_stone_from_end_stone_bricks_hammering"
+        "recipe": "easystonecutters:end_stone_from_end_stone_bricks_hammering"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:end_stone_from_end_stone_bricks_hammering"
+      "easystonecutters:end_stone_from_end_stone_bricks_hammering"
     ]
   }
 }

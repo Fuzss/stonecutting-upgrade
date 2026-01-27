@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:orange_glazed_terracotta_from_light_gray_glazed_terracotta_hammering"
+        "recipe": "easystonecutters:orange_glazed_terracotta_from_light_gray_glazed_terracotta_hammering"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:orange_glazed_terracotta_from_light_gray_glazed_terracotta_hammering"
+      "easystonecutters:orange_glazed_terracotta_from_light_gray_glazed_terracotta_hammering"
     ]
   }
 }

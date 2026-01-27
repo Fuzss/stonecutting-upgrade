@@ -25,14 +25,14 @@ public enum SelectionMode implements StringRepresentable {
     FLAT {
         @Override
         boolean isNeighborPosition(BlockPos blockPos, Direction direction) {
-            return !Objects.equals(blockPos, BlockPos.ZERO);
+            return !Objects.equals(blockPos, BlockPos.ZERO)
+                    && direction.getAxis().choose(blockPos.getX(), blockPos.getY(), blockPos.getZ()) == 0;
         }
     },
     CUBE {
         @Override
         boolean isNeighborPosition(BlockPos blockPos, Direction direction) {
-            return !Objects.equals(blockPos, BlockPos.ZERO)
-                    && direction.getAxis().choose(blockPos.getX(), blockPos.getY(), blockPos.getZ()) == 0;
+            return !Objects.equals(blockPos, BlockPos.ZERO);
         }
     },
     LINE {
@@ -42,8 +42,8 @@ public enum SelectionMode implements StringRepresentable {
         }
 
         @Override
-        public int adjustMaxDepth(int maxDepth) {
-            return super.adjustMaxDepth(maxDepth) * 2;
+        public int adjustInteractionRange(int interactionRange) {
+            return super.adjustInteractionRange(interactionRange) * 2;
         }
     };
 
@@ -58,6 +58,7 @@ public enum SelectionMode implements StringRepresentable {
         return !Objects.equals(blockPos, BlockPos.ZERO) && (blockPos.getY() == 0
                 || blockPos.distManhattan(BlockPos.ZERO) == 1);
     });
+    public static final SelectionMode DEFAULT_SELECTION_MODE = FLAT;
 
     private final Function<Direction, List<BlockPos>> neighborPositions;
 
@@ -86,8 +87,8 @@ public enum SelectionMode implements StringRepresentable {
         }
     }
 
-    public int adjustMaxDepth(int maxDepth) {
-        return maxDepth;
+    public int adjustInteractionRange(int interactionRange) {
+        return interactionRange;
     }
 
     abstract boolean isNeighborPosition(BlockPos blockPos, Direction direction);

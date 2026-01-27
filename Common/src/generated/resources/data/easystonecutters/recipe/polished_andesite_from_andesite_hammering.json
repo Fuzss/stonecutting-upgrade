@@ -1,8 +1,5 @@
 {
-  "type": "easystonecutters:transmutation_in_world",
-  "ingredient": "minecraft:andesite",
-  "result": {
-    "count": 1,
-    "id": "minecraft:polished_andesite"
-  }
+  "type": "easystonecutters:hammering",
+  "input": "minecraft:andesite",
+  "result": "minecraft:polished_andesite"
 }

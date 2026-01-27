@@ -1,8 +1,5 @@
 {
-  "type": "easystonecutters:transmutation_in_world",
-  "ingredient": "minecraft:polished_granite",
-  "result": {
-    "count": 1,
-    "id": "minecraft:granite"
-  }
+  "type": "easystonecutters:hammering",
+  "input": "minecraft:polished_granite",
+  "result": "minecraft:granite"
 }

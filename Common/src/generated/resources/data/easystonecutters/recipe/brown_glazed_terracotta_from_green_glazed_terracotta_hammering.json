@@ -1,8 +1,5 @@
 {
-  "type": "easystonecutters:transmutation_in_world",
-  "ingredient": "minecraft:green_glazed_terracotta",
-  "result": {
-    "count": 1,
-    "id": "minecraft:brown_glazed_terracotta"
-  }
+  "type": "easystonecutters:hammering",
+  "input": "minecraft:green_glazed_terracotta",
+  "result": "minecraft:brown_glazed_terracotta"
 }

@@ -1,8 +1,5 @@
 {
-  "type": "easystonecutters:transmutation_in_world",
-  "ingredient": "minecraft:tuff_bricks",
-  "result": {
-    "count": 1,
-    "id": "minecraft:tuff"
-  }
+  "type": "easystonecutters:hammering",
+  "input": "minecraft:tuff_bricks",
+  "result": "minecraft:tuff"
 }
