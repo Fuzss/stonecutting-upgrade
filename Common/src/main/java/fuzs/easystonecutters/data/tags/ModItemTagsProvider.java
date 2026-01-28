@@ -16,7 +16,15 @@ public class ModItemTagsProvider extends AbstractTagProvider<Item> {
 
     @Override
     public void addTags(HolderLookup.Provider registries) {
-        this.tag(ModRegistry.HAMMER_ENCHANTABLE_ITEM_TAG).add(ModRegistry.MASONRY_HAMMER_ITEM);
-        this.tag(ItemTags.DURABILITY_ENCHANTABLE).add(ModRegistry.MASONRY_HAMMER_ITEM);
+        this.tag(ModRegistry.HAMMERS_ITEM_TAG)
+                .add(ModRegistry.WOODEN_HAMMER_ITEM.value(),
+                        ModRegistry.COPPER_HAMMER_ITEM.value(),
+                        ModRegistry.STONE_HAMMER_ITEM.value(),
+                        ModRegistry.GOLDEN_HAMMER_ITEM.value(),
+                        ModRegistry.IRON_HAMMER_ITEM.value(),
+                        ModRegistry.DIAMOND_HAMMER_ITEM.value(),
+                        ModRegistry.NETHERITE_HAMMER_ITEM.value());
+        this.tag(ModRegistry.HAMMER_ENCHANTABLE_ITEM_TAG).addTag(ModRegistry.HAMMERS_ITEM_TAG);
+        this.tag(ItemTags.DURABILITY_ENCHANTABLE).addTag(ModRegistry.HAMMERS_ITEM_TAG);
     }
 }

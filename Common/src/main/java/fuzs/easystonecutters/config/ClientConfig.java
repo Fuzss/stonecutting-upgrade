@@ -9,5 +9,5 @@ public class ClientConfig implements ConfigCore {
     @Config(description = "Press the space bar to refill the stonecutter input slot with items from your inventory.")
     public boolean quickMoveLastRecipeInput = true;
     @Config(description = "Refill the stonecutter input slot with full stacks, otherwise only single items are moved each time.")
-    public MoveAllItems quickMoveAllItems = MoveAllItems.ALWAYS;
+    public MoveAllItems quickMoveAllItems = MoveAllItems.HOLDING_SHIFT;
 }

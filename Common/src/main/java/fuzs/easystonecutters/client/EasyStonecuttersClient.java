@@ -1,15 +1,18 @@
 package fuzs.easystonecutters.client;
 
+import fuzs.easystonecutters.EasyStonecutters;
 import fuzs.easystonecutters.client.gui.screens.inventory.ModStonecutterScreen;
 import fuzs.easystonecutters.client.handler.HighlightedBlocksHandler;
+import fuzs.easystonecutters.client.handler.SelectedItemInGuiHandler;
 import fuzs.easystonecutters.client.renderer.rendertype.ModRenderTypes;
 import fuzs.easystonecutters.init.ModRegistry;
 import fuzs.easystonecutters.world.item.HammerItem;
 import fuzs.easystonecutters.world.item.component.SelectionMode;
-import fuzs.hotbarslotcycling.api.v1.client.SlotCyclingProvider;
 import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
+import fuzs.puzzleslib.api.client.core.v1.context.GuiLayersContext;
 import fuzs.puzzleslib.api.client.core.v1.context.RenderPipelinesContext;
 import fuzs.puzzleslib.api.client.event.v1.ClientTickEvents;
+import fuzs.puzzleslib.api.client.event.v1.entity.player.ClientPlayerNetworkEvents;
 import fuzs.puzzleslib.api.client.event.v1.gui.ScreenOpeningCallback;
 import fuzs.puzzleslib.api.client.gui.v2.tooltip.ItemTooltipRegistry;
 import fuzs.puzzleslib.api.event.v1.core.EventResultHolder;
@@ -38,6 +41,8 @@ public class EasyStonecuttersClient implements ClientModConstructor {
         ScreenOpeningCallback.EVENT.register(EasyStonecuttersClient::onScreenOpening);
         ClientTickEvents.END.register(HighlightedBlocksHandler::onEndClientTick);
         PlayerInteractEvents.USE_BLOCK.register(HighlightedBlocksHandler::onUseBlock);
+        ClientPlayerNetworkEvents.LEAVE.register(HighlightedBlocksHandler::onPlayerLeave);
+        ClientTickEvents.END.register(SelectedItemInGuiHandler::onEndClientTick);
     }
 
     private static EventResultHolder<Screen> onScreenOpening(@Nullable Screen oldScreen, @Nullable Screen newScreen) {
@@ -52,8 +57,7 @@ public class EasyStonecuttersClient implements ClientModConstructor {
 
     @Override
     public void onClientSetup() {
-        SlotCyclingProvider.registerProvider(ModRegistry.MASONRY_HAMMER_ITEM.value(), HammerCyclingProvider::new);
-        ItemTooltipRegistry.ITEM.registerItemTooltip(itemStack -> itemStack.is(ModRegistry.MASONRY_HAMMER_ITEM.value()),
+        ItemTooltipRegistry.ITEM.registerItemTooltip((ItemStack itemStack) -> itemStack.is(ModRegistry.HAMMERS_ITEM_TAG),
                 EasyStonecuttersClient::appendHoverText);
     }
 
@@ -69,5 +73,12 @@ public class EasyStonecuttersClient implements ClientModConstructor {
     @Override
     public void onRegisterRenderPipelines(RenderPipelinesContext context) {
         context.registerRenderPipeline(ModRenderTypes.LINES_SEE_THROUGH_RENDER_PIPELINE);
+    }
+
+    @Override
+    public void onRegisterGuiLayers(GuiLayersContext context) {
+        context.registerGuiLayer(GuiLayersContext.HOTBAR,
+                EasyStonecutters.id("selected_item"),
+                SelectedItemInGuiHandler::onRenderGuiLayer);
     }
 }

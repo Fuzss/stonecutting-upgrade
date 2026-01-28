@@ -1,3 +1,4 @@
-// 1.21.11	2026-01-27T15:25:55.488491	Tags for minecraft:item mod id vanilla
-e1c3a04921f4130a744569a6d3174dfbd446b65a data/easystonecutters/tags/item/enchantable/hammer.json
-e1c3a04921f4130a744569a6d3174dfbd446b65a data/minecraft/tags/item/enchantable/durability.json
+// 1.21.11	2026-01-28T20:24:40.592208	Tags for minecraft:item mod id vanilla
+84563dbb4d1086a747f0271ad04725c52e7bd5bc data/easystonecutters/tags/item/enchantable/hammer.json
+1dd094582da7a119da2ff273a97cb63d1ed3fa9e data/easystonecutters/tags/item/hammers.json
+84563dbb4d1086a747f0271ad04725c52e7bd5bc data/minecraft/tags/item/enchantable/durability.json

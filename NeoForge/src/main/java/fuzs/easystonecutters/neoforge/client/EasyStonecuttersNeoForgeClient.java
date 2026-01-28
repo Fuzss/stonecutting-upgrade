@@ -3,7 +3,6 @@ package fuzs.easystonecutters.neoforge.client;
 import fuzs.easystonecutters.EasyStonecutters;
 import fuzs.easystonecutters.client.EasyStonecuttersClient;
 import fuzs.easystonecutters.client.handler.HighlightedBlocksHandler;
-import fuzs.easystonecutters.client.util.ClientRecipeHelper;
 import fuzs.easystonecutters.client.util.OutlineShapeRenderer;
 import fuzs.easystonecutters.data.client.ModLanguageProvider;
 import fuzs.easystonecutters.data.client.ModModelProvider;
@@ -11,15 +10,12 @@ import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.neoforge.api.data.v2.core.DataProviderHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.context.ContextKey;
-import net.minecraft.world.item.crafting.RecipeMap;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.ExtractLevelRenderStateEvent;
-import net.neoforged.neoforge.client.event.RecipesReceivedEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 import net.neoforged.neoforge.common.NeoForge;
 
@@ -37,12 +33,6 @@ public class EasyStonecuttersNeoForgeClient {
     }
 
     private static void registerEventHandlers(IEventBus eventBus) {
-        eventBus.addListener((final RecipesReceivedEvent event) -> {
-            ClientRecipeHelper.setRecipeMap(event.getRecipeMap());
-        });
-        eventBus.addListener((final ClientPlayerNetworkEvent.LoggingOut event) -> {
-            ClientRecipeHelper.setRecipeMap(RecipeMap.EMPTY);
-        });
         eventBus.addListener((final ExtractLevelRenderStateEvent event) -> {
             HighlightedBlocksHandler.pickHighlightedBlocks(event.getLevel(),
                     event.getCamera(),

@@ -11,7 +11,7 @@ public enum MoveAllItems implements Predicate<KeyEvent> {
             return false;
         }
     },
-    SHIFT {
+    HOLDING_SHIFT {
         @Override
         public boolean test(KeyEvent keyEvent) {
             return keyEvent.hasShiftDown();

@@ -3,22 +3,14 @@ package fuzs.easystonecutters.fabric.client;
 import fuzs.easystonecutters.EasyStonecutters;
 import fuzs.easystonecutters.client.EasyStonecuttersClient;
 import fuzs.easystonecutters.client.handler.HighlightedBlocksHandler;
-import fuzs.easystonecutters.client.util.ClientRecipeHelper;
 import fuzs.easystonecutters.client.util.OutlineShapeRenderer;
 import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
-import fuzs.puzzleslib.fabric.api.client.event.v1.FabricClientPlayerEvents;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.recipe.v1.sync.ClientRecipeSynchronizedEvent;
 import net.fabricmc.fabric.api.client.rendering.v1.RenderStateDataKey;
 import net.fabricmc.fabric.api.client.rendering.v1.world.WorldExtractionContext;
 import net.fabricmc.fabric.api.client.rendering.v1.world.WorldRenderContext;
 import net.fabricmc.fabric.api.client.rendering.v1.world.WorldRenderEvents;
-import net.fabricmc.fabric.api.recipe.v1.sync.SynchronizedRecipes;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.MultiPlayerGameMode;
-import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.network.Connection;
-import net.minecraft.world.item.crafting.RecipeMap;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -33,12 +25,6 @@ public class EasyStonecuttersFabricClient implements ClientModInitializer {
     }
 
     private static void registerEventHandlers() {
-        ClientRecipeSynchronizedEvent.EVENT.register((Minecraft client, SynchronizedRecipes recipes) -> {
-            ClientRecipeHelper.setRecipeMap(RecipeMap.create(recipes.recipes()));
-        });
-        FabricClientPlayerEvents.PLAYER_LEAVE.register((LocalPlayer player, MultiPlayerGameMode multiPlayerGameMode, Connection connection) -> {
-            ClientRecipeHelper.setRecipeMap(RecipeMap.EMPTY);
-        });
         WorldRenderEvents.END_EXTRACTION.register((WorldExtractionContext context) -> {
             HighlightedBlocksHandler.pickHighlightedBlocks(context.world(),
                     context.camera(),

@@ -1,5 +1,0 @@
-{
-  "type": "easystonecutters:hammering",
-  "input": "minecraft:stone_brick_wall",
-  "result": "minecraft:cobblestone_wall"
-}

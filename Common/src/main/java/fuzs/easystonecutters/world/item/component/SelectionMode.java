@@ -1,6 +1,6 @@
 package fuzs.easystonecutters.world.item.component;
 
-import fuzs.easystonecutters.init.ModRegistry;
+import fuzs.easystonecutters.world.item.HammerItem;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -60,9 +60,12 @@ public enum SelectionMode implements StringRepresentable {
     });
     public static final SelectionMode DEFAULT_SELECTION_MODE = FLAT;
 
+    private final Component component;
     private final Function<Direction, List<BlockPos>> neighborPositions;
 
     SelectionMode() {
+        this.component = Component.translatable(HammerItem.createTranslationKey(this.getSerializedName()))
+                .withStyle(ChatFormatting.GOLD);
         this.neighborPositions = Util.memoize((Direction direction) -> {
             return getNeighborPositions(1, 1, (BlockPos blockPos) -> {
                 return this.isNeighborPosition(blockPos, direction);
@@ -79,6 +82,10 @@ public enum SelectionMode implements StringRepresentable {
                 horizontalDistance).filter(filter).map(BlockPos::immutable).toList();
     }
 
+    public Component getComponent() {
+        return this.component;
+    }
+
     public List<BlockPos> selectNeighborPositions(BlockState blockState, Direction direction) {
         if (blockState.getBlock() instanceof BushBlock) {
             return BUSH_NEIGHBOR_POSITIONS;
@@ -92,12 +99,6 @@ public enum SelectionMode implements StringRepresentable {
     }
 
     abstract boolean isNeighborPosition(BlockPos blockPos, Direction direction);
-
-    public Component getComponent() {
-        String translationKey =
-                ModRegistry.MASONRY_HAMMER_ITEM.value().getDescriptionId() + "." + this.getSerializedName();
-        return Component.translatable(translationKey).withStyle(ChatFormatting.GOLD);
-    }
 
     public SelectionMode cycle() {
         return BY_ID.apply(this.ordinal() + 1);

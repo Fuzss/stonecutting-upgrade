@@ -3,3 +3,6 @@ transitive-accessible   field   net/minecraft/client/gui/components/AbstractScro
 transitive-extendable   method  net/minecraft/client/gui/components/AbstractSelectionList   getFirstEntryY  ()I
 transitive-mutable  field   net/minecraft/world/inventory/Slot  x   I
 transitive-mutable  field   net/minecraft/world/inventory/Slot  y   I
+transitive-accessible   method  net/minecraft/world/item/ToolMaterial   applyCommonProperties   (Lnet/minecraft/world/item/Item$Properties;)Lnet/minecraft/world/item/Item$Properties;
+transitive-accessible   method  net/minecraft/world/item/ToolMaterial   createToolAttributes    (FF)Lnet/minecraft/world/item/component/ItemAttributeModifiers;
+transitive-accessible   method  net/minecraft/world/item/ToolMaterial   createSwordAttributes   (FF)Lnet/minecraft/world/item/component/ItemAttributeModifiers;

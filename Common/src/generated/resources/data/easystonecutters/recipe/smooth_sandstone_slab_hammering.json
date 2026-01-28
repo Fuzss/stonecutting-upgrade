@@ -1,8 +1,0 @@
-{
-  "type": "easystonecutters:hammering",
-  "input": "minecraft:smooth_sandstone_slab",
-  "result": [
-    "minecraft:sandstone_slab",
-    "minecraft:cut_sandstone_slab"
-  ]
-}

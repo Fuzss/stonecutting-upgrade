@@ -1,8 +1,0 @@
-{
-  "type": "easystonecutters:hammering",
-  "input": "minecraft:stone_stairs",
-  "result": [
-    "minecraft:cobblestone_stairs",
-    "minecraft:stone_brick_stairs"
-  ]
-}

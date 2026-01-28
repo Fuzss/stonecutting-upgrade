@@ -1,9 +1,16 @@
 {
   "enchantment.easystonecutters.masonry_reach": "Masonry Reach",
-  "item.easystonecutters.masonry_hammer": "Masonry Hammer",
-  "item.easystonecutters.masonry_hammer.cube": "Cube",
-  "item.easystonecutters.masonry_hammer.flat": "Flat",
-  "item.easystonecutters.masonry_hammer.line": "Line",
-  "item.easystonecutters.masonry_hammer.tooltip.changed_selection": "Changed Selection Mode to %s",
-  "item.easystonecutters.masonry_hammer.tooltip.current_selection": "Selection Mode: %s"
+  "item.easystonecutters.copper_hammer": "Copper Hammer",
+  "item.easystonecutters.diamond_hammer": "Diamond Hammer",
+  "item.easystonecutters.golden_hammer": "Golden Hammer",
+  "item.easystonecutters.hammer.cube": "Cube",
+  "item.easystonecutters.hammer.flat": "Flat",
+  "item.easystonecutters.hammer.line": "Line",
+  "item.easystonecutters.hammer.tooltip.changed_selection": "Changed Selection Mode to %s",
+  "item.easystonecutters.hammer.tooltip.current_selection": "Selection Mode: %s",
+  "item.easystonecutters.iron_hammer": "Iron Hammer",
+  "item.easystonecutters.netherite_hammer": "Netherite Hammer",
+  "item.easystonecutters.stone_hammer": "Stone Hammer",
+  "item.easystonecutters.wooden_hammer": "Wooden Hammer",
+  "itemGroup.easystonecutters.main": "Easy Stonecutters"
 }
