@@ -118,8 +118,12 @@ public class ModStonecutterScreen extends AbstractContainerScreen<StonecutterMen
 
     @Override
     public boolean keyPressed(KeyEvent keyEvent) {
+        if (super.keyPressed(keyEvent)) {
+            return true;
+        }
+
         if (!StonecuttingUpgrade.CONFIG.get(ClientConfig.class).quickMoveLastRecipeInput) {
-            return super.keyPressed(keyEvent);
+            return false;
         }
 
         if (keyEvent.isSelection() && !recipeInput.isEmpty()) {
@@ -127,7 +131,8 @@ public class ModStonecutterScreen extends AbstractContainerScreen<StonecutterMen
             Slot inputSlot = this.getMenu().getSlot(StonecutterMenu.INPUT_SLOT);
             $1:
             if (inputSlot.getItem().getCount() < inputSlot.getMaxStackSize(inputSlot.getItem())) {
-                boolean moveAllItems = StonecuttingUpgrade.CONFIG.get(ClientConfig.class).quickMoveAllItems.test(keyEvent);
+                boolean moveAllItems = StonecuttingUpgrade.CONFIG.get(ClientConfig.class).quickMoveAllItems.test(
+                        keyEvent);
                 if (ItemStack.isSameItemSameComponents(this.getMenu().getCarried(), recipeInput)) {
                     hasMovedItems = true;
                     this.refillSlotFromCarried(inputSlot, moveAllItems);
@@ -159,7 +164,7 @@ public class ModStonecutterScreen extends AbstractContainerScreen<StonecutterMen
             }
         }
 
-        return super.keyPressed(keyEvent);
+        return false;
     }
 
     private void refillSlotFromCarried(Slot inputSlot, boolean moveAllItems) {
