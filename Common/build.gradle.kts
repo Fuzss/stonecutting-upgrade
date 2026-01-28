@@ -4,5 +4,4 @@ plugins {
 
 dependencies {
     modCompileOnlyApi(libs.puzzleslib.common)
-    modCompileOnlyApi(libs.hotbarslotcycling.common)
 }

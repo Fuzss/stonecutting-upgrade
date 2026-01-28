@@ -1,8 +1,8 @@
 {
     "mod": {
-        "id": "easystonecutters",
-        "group": "fuzs.easystonecutters",
-        "name": "Easy Stonecutters",
+        "id": "stonecuttingupgrade",
+        "group": "fuzs.stonecuttingupgrade",
+        "name": "Stonecutting Upgrade",
         "version": "21.11.0",
         "authors": [
             "Fuzs"
@@ -37,12 +37,12 @@
     "links": [
         {
             "name": "github",
-            "slug": "easy-stonecutters"
+            "slug": "stonecutting-upgrade"
         }
     ],
     "environments": {
         "client": "required",
-        "server": "required"
+        "server": "unsupported"
     },
     "platforms": [
         "fabric",
