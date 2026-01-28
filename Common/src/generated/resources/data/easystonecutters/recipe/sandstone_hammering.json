@@ -1,0 +1,9 @@
+{
+  "type": "easystonecutters:hammering",
+  "input": "minecraft:sandstone",
+  "result": [
+    "minecraft:smooth_sandstone",
+    "minecraft:cut_sandstone",
+    "minecraft:chiseled_sandstone"
+  ]
+}

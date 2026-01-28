@@ -1,0 +1,8 @@
+{
+  "type": "easystonecutters:hammering",
+  "input": "minecraft:polished_blackstone_brick_wall",
+  "result": [
+    "minecraft:blackstone_wall",
+    "minecraft:polished_blackstone_wall"
+  ]
+}

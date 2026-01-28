@@ -20,6 +20,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -51,7 +53,7 @@ public class HighlightedBlocksHandler {
         setHighlightedBlocks(HighlightedBlocksHolder.EMPTY);
     }
 
-    public static void pickHighlightedBlocks(ClientLevel clientLevel, Camera camera, BlockHitResult hitResult) {
+    public static void pickHighlightedBlocks(ClientLevel clientLevel, Camera camera, @Nullable HitResult hitResult) {
         if (camera.entity() instanceof Player player) {
             ItemStack itemStack = getHeldItemStack(player, ModRegistry.MASONRY_HAMMER_ITEM.value());
             if (!itemStack.isEmpty()) {
@@ -93,13 +95,15 @@ public class HighlightedBlocksHandler {
                         itemInHand,
                         blockPos,
                         blockPositions,
-                        recipeHolder.value());
+                        recipeHolder.value(),
+                        highlightedBlocks.getRecipeIndex());
                 int selectedSlot = player.getInventory().getSelectedSlot();
                 MessageSender.broadcast(new ServerboundUseHammerMessage(selectedSlot,
                         interactionHand,
                         blockPos,
                         blockPositions,
-                        recipeHolder.id()));
+                        recipeHolder.id(),
+                        highlightedBlocks.getRecipeIndex()));
                 resetHighlightedBlocks();
                 return EventResultHolder.interrupt(InteractionResult.SUCCESS);
             }

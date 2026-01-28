@@ -1,0 +1,10 @@
+{
+  "type": "easystonecutters:hammering",
+  "input": "minecraft:chiseled_tuff",
+  "result": [
+    "minecraft:tuff",
+    "minecraft:polished_tuff",
+    "minecraft:tuff_bricks",
+    "minecraft:chiseled_tuff_bricks"
+  ]
+}

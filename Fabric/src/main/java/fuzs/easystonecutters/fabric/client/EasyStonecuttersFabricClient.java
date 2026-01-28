@@ -17,15 +17,10 @@ import net.fabricmc.fabric.api.recipe.v1.sync.SynchronizedRecipes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.MultiPlayerGameMode;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.state.BlockOutlineRenderState;
 import net.minecraft.network.Connection;
 import net.minecraft.world.item.crafting.RecipeMap;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jspecify.annotations.Nullable;
 
 public class EasyStonecuttersFabricClient implements ClientModInitializer {
     private static final RenderStateDataKey<VoxelShape> OUTLINE_SHAPE_DATA_KEY = RenderStateDataKey.create(
@@ -44,27 +39,25 @@ public class EasyStonecuttersFabricClient implements ClientModInitializer {
         FabricClientPlayerEvents.PLAYER_LEAVE.register((LocalPlayer player, MultiPlayerGameMode multiPlayerGameMode, Connection connection) -> {
             ClientRecipeHelper.setRecipeMap(RecipeMap.EMPTY);
         });
-        WorldRenderEvents.AFTER_BLOCK_OUTLINE_EXTRACTION.register((WorldExtractionContext context, @Nullable HitResult hitResult) -> {
-            BlockOutlineRenderState blockOutlineRenderState = context.worldState().blockOutlineRenderState;
-            if (blockOutlineRenderState != null && hitResult != null && hitResult.getType() == HitResult.Type.BLOCK) {
-                HighlightedBlocksHandler.pickHighlightedBlocks(context.world(),
-                        context.camera(),
-                        (BlockHitResult) hitResult);
+        WorldRenderEvents.END_EXTRACTION.register((WorldExtractionContext context) -> {
+            HighlightedBlocksHandler.pickHighlightedBlocks(context.world(),
+                    context.camera(),
+                    context.gameRenderer().getMinecraft().hitResult);
+            if (context.worldState().blockOutlineRenderState != null) {
                 VoxelShape voxelShape = HighlightedBlocksHandler.getHighlightedBlocks().getJoinedShape(context.world());
                 if (!voxelShape.isEmpty()) {
-                    blockOutlineRenderState.setData(OUTLINE_SHAPE_DATA_KEY, voxelShape);
+                    context.worldState().setData(OUTLINE_SHAPE_DATA_KEY, voxelShape);
                 }
             }
         });
-        WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register((WorldRenderContext context, BlockOutlineRenderState outlineRenderState) -> {
-            VoxelShape voxelShape = outlineRenderState.getDataOrDefault(OUTLINE_SHAPE_DATA_KEY, Shapes.empty());
+        WorldRenderEvents.AFTER_ENTITIES.register((WorldRenderContext context) -> {
+            VoxelShape voxelShape = context.worldState().getDataOrDefault(OUTLINE_SHAPE_DATA_KEY, Shapes.empty());
             if (!voxelShape.isEmpty()) {
                 OutlineShapeRenderer.renderLines(context.matrices(),
-                        (MultiBufferSource.BufferSource) context.consumers(),
+                        Minecraft.getInstance().renderBuffers().bufferSource(),
                         context.worldState().cameraRenderState.pos,
                         voxelShape);
             }
-            return true;
         });
     }
 }

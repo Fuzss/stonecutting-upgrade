@@ -1,0 +1,9 @@
+{
+  "type": "easystonecutters:hammering",
+  "input": "minecraft:polished_deepslate_wall",
+  "result": [
+    "minecraft:cobbled_deepslate_wall",
+    "minecraft:deepslate_brick_wall",
+    "minecraft:deepslate_tile_wall"
+  ]
+}

@@ -24,7 +24,8 @@ public record ServerboundUseHammerMessage(int selectedSlot,
                                           InteractionHand interactionHand,
                                           BlockPos blockPos,
                                           List<BlockPos> blockPositions,
-                                          ResourceKey<Recipe<?>> recipe) implements ServerboundPlayMessage {
+                                          ResourceKey<Recipe<?>> recipe,
+                                          int recipeIndex) implements ServerboundPlayMessage {
     public static final StreamCodec<ByteBuf, ServerboundUseHammerMessage> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.SHORT.map(Short::intValue, Integer::shortValue),
             ServerboundUseHammerMessage::selectedSlot,
@@ -36,6 +37,8 @@ public record ServerboundUseHammerMessage(int selectedSlot,
             ServerboundUseHammerMessage::blockPositions,
             ResourceKey.streamCodec(Registries.RECIPE),
             ServerboundUseHammerMessage::recipe,
+            ByteBufCodecs.VAR_INT,
+            ServerboundUseHammerMessage::recipeIndex,
             ServerboundUseHammerMessage::new);
 
     @Override
@@ -59,7 +62,8 @@ public record ServerboundUseHammerMessage(int selectedSlot,
                                 itemInHand,
                                 ServerboundUseHammerMessage.this.blockPos,
                                 ServerboundUseHammerMessage.this.blockPositions,
-                                recipe);
+                                recipe,
+                                ServerboundUseHammerMessage.this.recipeIndex);
                         itemInHand.hurtAndBreak(1, context.player(), ServerboundUseHammerMessage.this.interactionHand);
                     }
                 }

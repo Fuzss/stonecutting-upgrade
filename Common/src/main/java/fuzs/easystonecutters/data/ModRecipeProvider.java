@@ -9,6 +9,8 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -19,9 +21,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import org.jspecify.annotations.Nullable;
 
-import java.util.Objects;
+import java.util.Arrays;
 
 public class ModRecipeProvider extends AbstractRecipeProvider {
 
@@ -93,38 +94,6 @@ public class ModRecipeProvider extends AbstractRecipeProvider {
                 Blocks.CHISELED_RED_SANDSTONE);
         this.hammering(Blocks.RED_SANDSTONE_SLAB, Blocks.SMOOTH_RED_SANDSTONE_SLAB, Blocks.CUT_RED_SANDSTONE_SLAB);
         this.hammering(Blocks.RED_SANDSTONE_STAIRS, Blocks.SMOOTH_RED_SANDSTONE_STAIRS);
-        this.hammering(Blocks.WHITE_TERRACOTTA,
-                Blocks.ORANGE_TERRACOTTA,
-                Blocks.MAGENTA_TERRACOTTA,
-                Blocks.LIGHT_BLUE_TERRACOTTA,
-                Blocks.YELLOW_TERRACOTTA,
-                Blocks.LIME_TERRACOTTA,
-                Blocks.PINK_TERRACOTTA,
-                Blocks.GRAY_TERRACOTTA,
-                Blocks.LIGHT_GRAY_TERRACOTTA,
-                Blocks.CYAN_TERRACOTTA,
-                Blocks.PURPLE_TERRACOTTA,
-                Blocks.BLUE_TERRACOTTA,
-                Blocks.BROWN_TERRACOTTA,
-                Blocks.GREEN_TERRACOTTA,
-                Blocks.RED_TERRACOTTA,
-                Blocks.BLACK_TERRACOTTA);
-        this.hammering(Blocks.WHITE_GLAZED_TERRACOTTA,
-                Blocks.ORANGE_GLAZED_TERRACOTTA,
-                Blocks.MAGENTA_GLAZED_TERRACOTTA,
-                Blocks.LIGHT_BLUE_GLAZED_TERRACOTTA,
-                Blocks.YELLOW_GLAZED_TERRACOTTA,
-                Blocks.LIME_GLAZED_TERRACOTTA,
-                Blocks.PINK_GLAZED_TERRACOTTA,
-                Blocks.GRAY_GLAZED_TERRACOTTA,
-                Blocks.LIGHT_GRAY_GLAZED_TERRACOTTA,
-                Blocks.CYAN_GLAZED_TERRACOTTA,
-                Blocks.PURPLE_GLAZED_TERRACOTTA,
-                Blocks.BLUE_GLAZED_TERRACOTTA,
-                Blocks.BROWN_GLAZED_TERRACOTTA,
-                Blocks.GREEN_GLAZED_TERRACOTTA,
-                Blocks.RED_GLAZED_TERRACOTTA,
-                Blocks.BLACK_GLAZED_TERRACOTTA);
         this.hammering(Blocks.BASALT, Blocks.SMOOTH_BASALT, Blocks.POLISHED_BASALT);
         this.hammering(Blocks.BLACKSTONE,
                 Blocks.POLISHED_BLACKSTONE,
@@ -140,30 +109,23 @@ public class ModRecipeProvider extends AbstractRecipeProvider {
     }
 
     public final void hammering(Block... blocks) {
-        for (Block result : blocks) {
-            for (Block ingredient : blocks) {
-                if (result != ingredient) {
-                    this.hammeringResultFromBase(RecipeCategory.MISC, result, ingredient);
-                }
-            }
-        }
+        HolderSet.Direct<Block> holderSet = HolderSet.direct(Arrays.stream(blocks)
+                .map(BuiltInRegistries.BLOCK::wrapAsHolder)
+                .toList());
+        this.hammeringResultFromBase(RecipeCategory.MISC, holderSet);
     }
 
-    public final void hammeringResultFromBase(RecipeCategory category, Block result, Block ingredient) {
-        this.hammeringResultFromBase(category, result, ingredient, null);
-    }
-
-    public final void hammeringResultFromBase(RecipeCategory category, Block result, Block input, @Nullable String group) {
-        String recipeName = getConversionRecipeName(result, input) + "_hammering";
+    public final void hammeringResultFromBase(RecipeCategory category, HolderSet<Block> blocks) {
+        // TODO handle this with tags
+        Holder<Block> input = blocks.get(0);
+        String recipeName = getItemName(input.value()) + "_hammering";
         ResourceKey<Recipe<?>> resourceKey = ResourceKey.create(Registries.RECIPE, EasyStonecutters.id(recipeName));
         Advancement.Builder builder = this.output.advancement()
                 .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(resourceKey))
                 .rewards(AdvancementRewards.Builder.recipe(resourceKey))
                 .requirements(AdvancementRequirements.Strategy.OR);
-        builder.addCriterion(getHasName(input), this.has(input));
-        Recipe<?> recipe = new HammeringRecipe(Objects.requireNonNullElse(group, ""),
-                BuiltInRegistries.BLOCK.wrapAsHolder(input),
-                BuiltInRegistries.BLOCK.wrapAsHolder(result));
+        builder.addCriterion(getHasName(input.value()), this.has(input.value()));
+        Recipe<?> recipe = new HammeringRecipe(blocks);
         this.output.accept(resourceKey,
                 recipe,
                 builder.build(resourceKey.identifier().withPrefix("recipes/" + category.getFolderName() + "/")));

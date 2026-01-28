@@ -5,6 +5,7 @@ import fuzs.easystonecutters.world.item.crafting.HammeringRecipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeMap;
 import net.minecraft.world.item.crafting.SelectableRecipe;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
 
 import java.util.Collection;
 import java.util.List;
@@ -22,7 +23,7 @@ public class ClientRecipeHelper {
             Collection<RecipeHolder<HammeringRecipe>> recipeHolders = recipeMap.byType(ModRegistry.HAMMERING_RECIPE_TYPE.value());
             List<SelectableRecipe.SingleInputEntry<HammeringRecipe>> recipes = recipeHolders.stream()
                     .map((RecipeHolder<HammeringRecipe> holder) -> new SelectableRecipe.SingleInputEntry<>(holder.value()
-                            .ingredient(), new SelectableRecipe<>(holder.value().resultDisplay(), Optional.of(holder))))
+                            .ingredient(), new SelectableRecipe<>(SlotDisplay.Empty.INSTANCE, Optional.of(holder))))
                     .toList();
             syncedRecipes = new SelectableRecipe.SingleInputSet<>(recipes);
         }

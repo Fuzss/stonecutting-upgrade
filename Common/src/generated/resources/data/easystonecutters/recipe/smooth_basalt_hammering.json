@@ -1,0 +1,8 @@
+{
+  "type": "easystonecutters:hammering",
+  "input": "minecraft:smooth_basalt",
+  "result": [
+    "minecraft:basalt",
+    "minecraft:polished_basalt"
+  ]
+}

@@ -30,14 +30,19 @@ public record HighlightedBlockMemory(int interactionRange,
             Blocks.AIR.defaultBlockState());
     private static final int MAX_NEIGHBOR_POSITIONS = 1024;
 
-    public static HighlightedBlockMemory of(BlockGetter blockGetter, Player player, ItemStack itemStack, BlockHitResult hitResult) {
-        int interactionRange = HammerItem.getInteractionRange(itemStack, player);
-        SelectionMode selectionMode = HammerItem.getSelectionMode(itemStack);
-        return new HighlightedBlockMemory(selectionMode.adjustInteractionRange(interactionRange),
-                selectionMode,
-                hitResult.getBlockPos(),
-                hitResult.getDirection(),
-                blockGetter.getBlockState(hitResult.getBlockPos()));
+    public static HighlightedBlockMemory of(BlockGetter blockGetter, Player player, ItemStack itemStack, @Nullable HitResult hitResult) {
+        if (hitResult != null && hitResult.getType() == HitResult.Type.BLOCK) {
+            int interactionRange = HammerItem.getInteractionRange(itemStack, player);
+            SelectionMode selectionMode = HammerItem.getSelectionMode(itemStack);
+            BlockHitResult blockHitResult = (BlockHitResult) hitResult;
+            return new HighlightedBlockMemory(selectionMode.adjustInteractionRange(interactionRange),
+                    selectionMode,
+                    blockHitResult.getBlockPos(),
+                    blockHitResult.getDirection(),
+                    blockGetter.getBlockState(blockHitResult.getBlockPos()));
+        } else {
+            return EMPTY;
+        }
     }
 
     boolean stillValid(BlockGetter blockGetter, @Nullable HitResult hitResult, SelectionMode selectionMode, int interactionRange) {
@@ -91,9 +96,5 @@ public record HighlightedBlockMemory(int interactionRange,
 
     boolean isSameBlock(BlockState blockState) {
         return this.blockState.is(blockState.getBlock());
-    }
-
-    boolean shouldDrawHighlight() {
-        return this.interactionRange > 0;
     }
 }
