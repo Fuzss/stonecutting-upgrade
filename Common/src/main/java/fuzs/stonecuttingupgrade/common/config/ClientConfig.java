@@ -1,4 +1,4 @@
-package fuzs.stonecuttingupgrade.config;
+package fuzs.stonecuttingupgrade.common.config;
 
 import fuzs.puzzleslib.common.api.config.v3.Config;
 import fuzs.puzzleslib.common.api.config.v3.ConfigCore;

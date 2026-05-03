@@ -1,7 +1,7 @@
 package fuzs.stonecuttingupgrade.neoforge;
 
 import fuzs.puzzleslib.common.api.core.v1.ModConstructor;
-import fuzs.stonecuttingupgrade.StonecuttingUpgrade;
+import fuzs.stonecuttingupgrade.common.StonecuttingUpgrade;
 import net.neoforged.fml.common.Mod;
 
 @Mod(StonecuttingUpgrade.MOD_ID)

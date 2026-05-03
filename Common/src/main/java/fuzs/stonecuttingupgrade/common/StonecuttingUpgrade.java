@@ -1,6 +1,6 @@
-package fuzs.stonecuttingupgrade;
+package fuzs.stonecuttingupgrade.common;
 
-import fuzs.stonecuttingupgrade.config.ClientConfig;
+import fuzs.stonecuttingupgrade.common.config.ClientConfig;
 import fuzs.puzzleslib.common.api.config.v3.ConfigHolder;
 import fuzs.puzzleslib.common.api.core.v1.ModConstructor;
 import net.minecraft.resources.Identifier;

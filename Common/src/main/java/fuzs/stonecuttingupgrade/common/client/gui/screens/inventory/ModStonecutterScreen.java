@@ -1,10 +1,10 @@
-package fuzs.stonecuttingupgrade.client.gui.screens.inventory;
+package fuzs.stonecuttingupgrade.common.client.gui.screens.inventory;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import fuzs.puzzleslib.common.api.client.gui.v2.components.AbstractMenuSelectionList;
-import fuzs.stonecuttingupgrade.StonecuttingUpgrade;
-import fuzs.stonecuttingupgrade.client.gui.components.RecipeImageButton;
-import fuzs.stonecuttingupgrade.config.ClientConfig;
+import fuzs.stonecuttingupgrade.common.StonecuttingUpgrade;
+import fuzs.stonecuttingupgrade.common.client.gui.components.RecipeImageButton;
+import fuzs.stonecuttingupgrade.common.config.ClientConfig;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.WidgetSprites;

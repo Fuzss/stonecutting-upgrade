@@ -1,10 +1,10 @@
-package fuzs.stonecuttingupgrade.client.gui.components;
+package fuzs.stonecuttingupgrade.common.client.gui.components;
 
 import fuzs.puzzleslib.common.api.client.gui.v2.tooltip.TooltipBuilder;
 import fuzs.puzzleslib.common.api.client.gui.v2.tooltip.TooltipRenderHelper;
-import fuzs.stonecuttingupgrade.StonecuttingUpgrade;
-import fuzs.stonecuttingupgrade.client.gui.screens.inventory.ModStonecutterScreen;
-import fuzs.stonecuttingupgrade.config.ClientConfig;
+import fuzs.stonecuttingupgrade.common.StonecuttingUpgrade;
+import fuzs.stonecuttingupgrade.common.client.gui.screens.inventory.ModStonecutterScreen;
+import fuzs.stonecuttingupgrade.common.config.ClientConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;

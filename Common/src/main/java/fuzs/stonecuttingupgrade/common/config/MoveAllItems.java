@@ -1,4 +1,4 @@
-package fuzs.stonecuttingupgrade.config;
+package fuzs.stonecuttingupgrade.common.config;
 
 import net.minecraft.client.input.KeyEvent;
 

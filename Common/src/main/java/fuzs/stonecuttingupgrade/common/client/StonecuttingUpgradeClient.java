@@ -1,6 +1,6 @@
-package fuzs.stonecuttingupgrade.client;
+package fuzs.stonecuttingupgrade.common.client;
 
-import fuzs.stonecuttingupgrade.client.gui.screens.inventory.ModStonecutterScreen;
+import fuzs.stonecuttingupgrade.common.client.gui.screens.inventory.ModStonecutterScreen;
 import fuzs.puzzleslib.common.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.common.api.client.event.v1.gui.ScreenOpeningCallback;
 import fuzs.puzzleslib.common.api.event.v1.core.EventResultHolder;
