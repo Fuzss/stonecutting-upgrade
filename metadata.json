@@ -1,9 +1,10 @@
 {
+    "minecraft": "26.1.2",
     "mod": {
         "id": "stonecuttingupgrade",
         "group": "fuzs.stonecuttingupgrade",
         "name": "Stonecutting Upgrade",
-        "version": "21.11.0",
+        "version": "26.1.0",
         "authors": [
             "Fuzs"
         ],

@@ -1,11 +1,11 @@
 package fuzs.stonecuttingupgrade.client.gui.screens.inventory;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import fuzs.puzzleslib.common.api.client.gui.v2.components.AbstractMenuSelectionList;
 import fuzs.stonecuttingupgrade.StonecuttingUpgrade;
-import fuzs.stonecuttingupgrade.client.gui.components.AbstractMenuSelectionList;
 import fuzs.stonecuttingupgrade.client.gui.components.RecipeImageButton;
 import fuzs.stonecuttingupgrade.config.ClientConfig;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -15,7 +15,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.context.ContextMap;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.inventory.StonecutterMenu;
 import net.minecraft.world.item.ItemStack;
@@ -59,12 +59,6 @@ public class ModStonecutterScreen extends AbstractContainerScreen<StonecutterMen
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        super.render(guiGraphics, mouseX, mouseY, partialTick);
-        this.renderTooltip(guiGraphics, mouseX, mouseY);
-    }
-
-    @Override
     protected void init() {
         super.init();
         this.scrollingList = new RecipeSelectionList(this.leftPos + 40, this.topPos + 15);
@@ -103,7 +97,8 @@ public class ModStonecutterScreen extends AbstractContainerScreen<StonecutterMen
     }
 
     @Override
-    protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
+    public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
+        super.extractBackground(guiGraphics, mouseX, mouseY, partialTick);
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
                 TEXTURE_LOCATION,
                 this.leftPos,
@@ -171,16 +166,16 @@ public class ModStonecutterScreen extends AbstractContainerScreen<StonecutterMen
         this.slotClicked(inputSlot,
                 inputSlot.index,
                 moveAllItems ? InputConstants.MOUSE_BUTTON_LEFT : InputConstants.MOUSE_BUTTON_RIGHT,
-                ClickType.PICKUP);
+                ContainerInput.PICKUP);
     }
 
     private void refillSlotFromInventory(Slot inventorySlot, Slot inputSlot, boolean moveAllItems) {
-        this.slotClicked(inventorySlot, inventorySlot.index, InputConstants.MOUSE_BUTTON_LEFT, ClickType.PICKUP);
+        this.slotClicked(inventorySlot, inventorySlot.index, InputConstants.MOUSE_BUTTON_LEFT, ContainerInput.PICKUP);
         this.slotClicked(inputSlot,
                 inputSlot.index,
                 moveAllItems ? InputConstants.MOUSE_BUTTON_LEFT : InputConstants.MOUSE_BUTTON_RIGHT,
-                ClickType.PICKUP);
-        this.slotClicked(inventorySlot, inventorySlot.index, InputConstants.MOUSE_BUTTON_LEFT, ClickType.PICKUP);
+                ContainerInput.PICKUP);
+        this.slotClicked(inventorySlot, inventorySlot.index, InputConstants.MOUSE_BUTTON_LEFT, ContainerInput.PICKUP);
     }
 
     private class RecipeSelectionList extends AbstractMenuSelectionList<RecipeSelectionList.Entry> {
@@ -191,8 +186,12 @@ public class ModStonecutterScreen extends AbstractContainerScreen<StonecutterMen
                     posY,
                     RECIPES_COLUMNS * RECIPES_IMAGE_SIZE_WIDTH,
                     RECIPES_ROWS * RECIPES_IMAGE_SIZE_HEIGHT,
-                    RECIPES_IMAGE_SIZE_HEIGHT,
-                    3);
+                    RECIPES_IMAGE_SIZE_HEIGHT);
+        }
+
+        @Override
+        protected int scrollBarX() {
+            return this.getRowRight() + 3;
         }
 
         public void addRecipe(StonecutterMenu menu, int recipeIndex, ItemStack itemStack) {

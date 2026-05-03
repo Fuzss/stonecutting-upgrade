@@ -1,9 +1,9 @@
 package fuzs.stonecuttingupgrade.client;
 
 import fuzs.stonecuttingupgrade.client.gui.screens.inventory.ModStonecutterScreen;
-import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
-import fuzs.puzzleslib.api.client.event.v1.gui.ScreenOpeningCallback;
-import fuzs.puzzleslib.api.event.v1.core.EventResultHolder;
+import fuzs.puzzleslib.common.api.client.core.v1.ClientModConstructor;
+import fuzs.puzzleslib.common.api.client.event.v1.gui.ScreenOpeningCallback;
+import fuzs.puzzleslib.common.api.event.v1.core.EventResultHolder;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.StonecutterScreen;
 import org.jspecify.annotations.Nullable;

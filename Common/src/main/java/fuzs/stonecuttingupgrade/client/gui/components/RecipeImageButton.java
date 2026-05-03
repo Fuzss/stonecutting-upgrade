@@ -1,12 +1,12 @@
 package fuzs.stonecuttingupgrade.client.gui.components;
 
+import fuzs.puzzleslib.common.api.client.gui.v2.tooltip.TooltipBuilder;
+import fuzs.puzzleslib.common.api.client.gui.v2.tooltip.TooltipRenderHelper;
 import fuzs.stonecuttingupgrade.StonecuttingUpgrade;
 import fuzs.stonecuttingupgrade.client.gui.screens.inventory.ModStonecutterScreen;
 import fuzs.stonecuttingupgrade.config.ClientConfig;
-import fuzs.puzzleslib.api.client.gui.v2.tooltip.TooltipBuilder;
-import fuzs.puzzleslib.api.client.gui.v2.tooltip.TooltipRenderHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipPositioner;
@@ -85,9 +85,9 @@ public class RecipeImageButton extends ImageButton {
     }
 
     @Override
-    public void renderContents(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+    public void extractContents(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
         this.active = this.menu.getSelectedRecipeIndex() != this.recipeIndex;
-        super.renderContents(guiGraphics, mouseX, mouseY, partialTick);
-        guiGraphics.renderFakeItem(this.recipeOutput, this.getX(), this.getY() + 1);
+        super.extractContents(guiGraphics, mouseX, mouseY, partialTick);
+        guiGraphics.fakeItem(this.recipeOutput, this.getX(), this.getY() + 1);
     }
 }
