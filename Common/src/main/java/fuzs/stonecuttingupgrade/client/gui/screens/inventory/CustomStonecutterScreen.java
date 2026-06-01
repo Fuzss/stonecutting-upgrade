@@ -8,7 +8,6 @@ import fuzs.stonecuttingupgrade.config.ClientConfig;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.WidgetSprites;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
@@ -26,7 +25,7 @@ import net.minecraft.world.item.crafting.display.SlotDisplayContext;
 
 import java.util.List;
 
-public class ModStonecutterScreen extends AbstractContainerScreen<StonecutterMenu> {
+public class CustomStonecutterScreen extends AbstractWidgetsContainerScreen<StonecutterMenu> {
     public static final Identifier TEXTURE_LOCATION = StonecuttingUpgrade.id("textures/gui/container/stonecutter.png");
     public static final Identifier RECIPE_SELECTED_SPRITE = Identifier.withDefaultNamespace(
             "container/stonecutter/recipe_selected");
@@ -44,7 +43,7 @@ public class ModStonecutterScreen extends AbstractContainerScreen<StonecutterMen
     private static ItemStack recipeInput = ItemStack.EMPTY;
     private RecipeSelectionList scrollingList;
 
-    public ModStonecutterScreen(StonecutterMenu menu, Inventory inventory, Component title) {
+    public CustomStonecutterScreen(StonecutterMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
         menu.registerUpdateListener(this::containerChanged);
         this.setSlotPosition(StonecutterMenu.INPUT_SLOT, 13, 19);
@@ -186,7 +185,7 @@ public class ModStonecutterScreen extends AbstractContainerScreen<StonecutterMen
     private class RecipeSelectionList extends AbstractMenuSelectionList<RecipeSelectionList.Entry> {
 
         public RecipeSelectionList(int posX, int posY) {
-            super(ModStonecutterScreen.this.minecraft,
+            super(CustomStonecutterScreen.this.minecraft,
                     posX,
                     posY,
                     RECIPES_COLUMNS * RECIPES_IMAGE_SIZE_WIDTH,
@@ -206,7 +205,7 @@ public class ModStonecutterScreen extends AbstractContainerScreen<StonecutterMen
             }
 
             entry.addRenderableWidget(new RecipeImageButton(menu,
-                    this.getX() + columnIndex * ModStonecutterScreen.RECIPES_IMAGE_SIZE_WIDTH,
+                    this.getX() + columnIndex * CustomStonecutterScreen.RECIPES_IMAGE_SIZE_WIDTH,
                     this.getY(),
                     recipeIndex,
                     itemStack));

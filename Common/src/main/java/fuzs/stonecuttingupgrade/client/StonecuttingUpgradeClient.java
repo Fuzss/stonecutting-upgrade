@@ -1,6 +1,6 @@
 package fuzs.stonecuttingupgrade.client;
 
-import fuzs.stonecuttingupgrade.client.gui.screens.inventory.ModStonecutterScreen;
+import fuzs.stonecuttingupgrade.client.gui.screens.inventory.CustomStonecutterScreen;
 import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.api.client.event.v1.gui.ScreenOpeningCallback;
 import fuzs.puzzleslib.api.event.v1.core.EventResultHolder;
@@ -21,7 +21,7 @@ public class StonecuttingUpgradeClient implements ClientModConstructor {
 
     private static EventResultHolder<Screen> onScreenOpening(@Nullable Screen oldScreen, @Nullable Screen newScreen) {
         if (newScreen instanceof StonecutterScreen screen) {
-            return EventResultHolder.interrupt(new ModStonecutterScreen(screen.getMenu(),
+            return EventResultHolder.interrupt(new CustomStonecutterScreen(screen.getMenu(),
                     screen.minecraft.player.getInventory(),
                     screen.getTitle()));
         } else {

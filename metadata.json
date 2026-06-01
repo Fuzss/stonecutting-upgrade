@@ -36,8 +36,18 @@
     ],
     "links": [
         {
+            "name": "curseforge",
+            "slug": "stonecutting-upgrade",
+            "id": "1560725"
+        },
+        {
             "name": "github",
             "slug": "stonecutting-upgrade"
+        },
+        {
+            "name": "modrinth",
+            "slug": "stonecutting-upgrade",
+            "id": "ZCLuNtSF"
         }
     ],
     "environments": {
