@@ -4,11 +4,11 @@
         "id": "stonecuttingupgrade",
         "group": "fuzs.stonecuttingupgrade",
         "name": "Stonecutting Upgrade",
-        "version": "26.1.0",
+        "version": "26.1.1",
         "authors": [
             "Fuzs"
         ],
-        "description": "Example description.",
+        "description": "Bigger stonecutter menus, remembered recipes, and quick refills for speedy crafting.",
         "license": "MPL-2.0"
     },
     "dependencies": [
@@ -37,8 +37,18 @@
     ],
     "links": [
         {
+            "name": "curseforge",
+            "slug": "stonecutting-upgrade",
+            "id": "1560725"
+        },
+        {
             "name": "github",
             "slug": "stonecutting-upgrade"
+        },
+        {
+            "name": "modrinth",
+            "slug": "stonecutting-upgrade",
+            "id": "ZCLuNtSF"
         }
     ],
     "environments": {
