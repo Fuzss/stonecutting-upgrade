@@ -72,32 +72,34 @@ public class CustomStonecutterScreen extends AbstractWidgetsContainerScreen<Ston
     }
 
     private void containerChanged() {
-        int size = this.scrollingList.children().size();
-        this.scrollingList.clearEntries();
-        if (this.getMenu().hasInputItem()) {
-            if (StonecuttingUpgrade.CONFIG.get(ClientConfig.class).rememberLastRecipe) {
-                ItemStack inputItemStack = this.getMenu().getSlot(StonecutterMenu.INPUT_SLOT).getItem();
-                if (!ItemStack.isSameItemSameComponents(inputItemStack, recipeInput)) {
-                    recipeInput = inputItemStack.copyWithCount(1);
+        if (this.scrollingList != null) {
+            int size = this.scrollingList.children().size();
+            this.scrollingList.clearEntries();
+            if (this.getMenu().hasInputItem()) {
+                if (StonecuttingUpgrade.CONFIG.get(ClientConfig.class).rememberLastRecipe) {
+                    ItemStack inputItemStack = this.getMenu().getSlot(StonecutterMenu.INPUT_SLOT).getItem();
+                    if (!ItemStack.isSameItemSameComponents(inputItemStack, recipeInput)) {
+                        recipeInput = inputItemStack.copyWithCount(1);
+                        RecipeImageButton.clearLastRecipeOutput();
+                    }
+                } else {
                     RecipeImageButton.clearLastRecipeOutput();
                 }
-            } else {
-                RecipeImageButton.clearLastRecipeOutput();
+
+                ContextMap contextMap = SlotDisplayContext.fromLevel(this.minecraft.level);
+                List<SelectableRecipe.SingleInputEntry<StonecutterRecipe>> recipesForInput = this.getMenu()
+                        .getVisibleRecipes()
+                        .entries();
+                for (int recipeIndex = 0; recipeIndex < recipesForInput.size(); recipeIndex++) {
+                    SlotDisplay slotDisplay = recipesForInput.get(recipeIndex).recipe().optionDisplay();
+                    ItemStack itemStack = slotDisplay.resolveForFirstStack(contextMap);
+                    this.scrollingList.addRecipe(this.getMenu(), recipeIndex, itemStack);
+                }
             }
 
-            ContextMap contextMap = SlotDisplayContext.fromLevel(this.minecraft.level);
-            List<SelectableRecipe.SingleInputEntry<StonecutterRecipe>> recipesForInput = this.getMenu()
-                    .getVisibleRecipes()
-                    .entries();
-            for (int recipeIndex = 0; recipeIndex < recipesForInput.size(); recipeIndex++) {
-                SlotDisplay slotDisplay = recipesForInput.get(recipeIndex).recipe().optionDisplay();
-                ItemStack itemStack = slotDisplay.resolveForFirstStack(contextMap);
-                this.scrollingList.addRecipe(this.getMenu(), recipeIndex, itemStack);
+            if (!this.getMenu().hasInputItem() || size != this.scrollingList.children().size()) {
+                this.scrollingList.setScrollAmount(0.0);
             }
-        }
-
-        if (!this.getMenu().hasInputItem() || size != this.scrollingList.children().size()) {
-            this.scrollingList.setScrollAmount(0.0);
         }
     }
 
