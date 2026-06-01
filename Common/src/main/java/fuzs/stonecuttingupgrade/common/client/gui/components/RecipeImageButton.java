@@ -3,7 +3,7 @@ package fuzs.stonecuttingupgrade.common.client.gui.components;
 import fuzs.puzzleslib.common.api.client.gui.v2.tooltip.TooltipBuilder;
 import fuzs.puzzleslib.common.api.client.gui.v2.tooltip.TooltipRenderHelper;
 import fuzs.stonecuttingupgrade.common.StonecuttingUpgrade;
-import fuzs.stonecuttingupgrade.common.client.gui.screens.inventory.ModStonecutterScreen;
+import fuzs.stonecuttingupgrade.common.client.gui.screens.inventory.CustomStonecutterScreen;
 import fuzs.stonecuttingupgrade.common.config.ClientConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -29,9 +29,9 @@ public class RecipeImageButton extends ImageButton {
     public RecipeImageButton(StonecutterMenu menu, int posX, int posY, int recipeIndex, ItemStack recipeOutput) {
         super(posX,
                 posY,
-                ModStonecutterScreen.RECIPES_IMAGE_SIZE_WIDTH,
-                ModStonecutterScreen.RECIPES_IMAGE_SIZE_HEIGHT,
-                ModStonecutterScreen.RECIPE_SPRITES,
+                CustomStonecutterScreen.RECIPES_IMAGE_SIZE_WIDTH,
+                CustomStonecutterScreen.RECIPES_IMAGE_SIZE_HEIGHT,
+                CustomStonecutterScreen.RECIPE_SPRITES,
                 Function.identity()::apply);
         this.menu = menu;
         this.recipeIndex = recipeIndex;
