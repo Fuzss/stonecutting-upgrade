@@ -1,8 +1,15 @@
 {
   "branches": {
+    "1.21.1": "maintained",
     "1.21.11": "archived",
     "26.1.x": "maintained",
-    "26.2.x": "primary",
-    "1.21.1": "maintained"
+    "26.2.x": "primary"
+  },
+  "properties": {
+    "distributions.curseforge.id": "1560725",
+    "distributions.curseforge.slug": "stonecutting-upgrade",
+    "distributions.github.slug": "stonecutting-upgrade",
+    "distributions.modrinth.id": "ZCLuNtSF",
+    "distributions.modrinth.slug": "stonecutting-upgrade"
   }
 }
