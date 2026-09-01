@@ -5,11 +5,17 @@
     "26.1.x": "maintained",
     "26.2.x": "primary"
   },
-  "properties": {
-    "distributions.curseforge.id": "1560725",
-    "distributions.curseforge.slug": "stonecutting-upgrade",
-    "distributions.github.slug": "stonecutting-upgrade",
-    "distributions.modrinth.id": "ZCLuNtSF",
-    "distributions.modrinth.slug": "stonecutting-upgrade"
+  "distributions": {
+    "curseforge": {
+      "id": "1560725",
+      "slug": "stonecutting-upgrade"
+    },
+    "github": {
+      "slug": "stonecutting-upgrade"
+    },
+    "modrinth": {
+      "id": "ZCLuNtSF",
+      "slug": "stonecutting-upgrade"
+    }
   }
 }
