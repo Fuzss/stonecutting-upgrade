@@ -1,18 +1,17 @@
 package fuzs.stonecuttingupgrade.common.client.gui.components;
 
-import fuzs.puzzleslib.common.api.client.gui.v2.tooltip.TooltipBuilder;
-import fuzs.puzzleslib.common.api.client.gui.v2.tooltip.TooltipRenderHelper;
+import fuzs.puzzleslib.api.client.gui.v2.components.tooltip.TooltipBuilder;
+import fuzs.puzzleslib.api.client.gui.v2.tooltip.TooltipRenderHelper;
 import fuzs.stonecuttingupgrade.common.StonecuttingUpgrade;
 import fuzs.stonecuttingupgrade.common.client.gui.screens.inventory.CustomStonecutterScreen;
 import fuzs.stonecuttingupgrade.common.config.ClientConfig;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipPositioner;
 import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
 import net.minecraft.client.gui.screens.inventory.tooltip.MenuTooltipPositioner;
-import net.minecraft.client.input.InputWithModifiers;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.inventory.StonecutterMenu;
@@ -49,7 +48,7 @@ public class RecipeImageButton extends ImageButton {
                 if (this.menu.getSelectedRecipeIndex() != recipeIndex) {
                     // When the recipe input update, this runs immediately, before the server is notified and has a chance to refresh the recipes for the new input.
                     // So this must run deferred, so the server has the correct recipes set up already which can then be selected.
-                    Minecraft.getInstance().schedule(() -> {
+                    Minecraft.getInstance().execute(() -> {
                         this.selectRecipe(recipeIndex, false);
                     });
                 }
@@ -77,7 +76,7 @@ public class RecipeImageButton extends ImageButton {
     }
 
     @Override
-    public void onPress(InputWithModifiers input) {
+    public void onPress() {
         if (this.selectRecipe(this.recipeIndex, true)) {
             this.active = this.menu.getSelectedRecipeIndex() != this.recipeIndex;
             lastRecipeOutput = this.recipeOutput.copyWithCount(1);
@@ -85,9 +84,9 @@ public class RecipeImageButton extends ImageButton {
     }
 
     @Override
-    public void extractContents(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
+    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         this.active = this.menu.getSelectedRecipeIndex() != this.recipeIndex;
-        super.extractContents(guiGraphics, mouseX, mouseY, partialTick);
-        guiGraphics.fakeItem(this.recipeOutput, this.getX(), this.getY() + 1);
+        super.renderWidget(guiGraphics, mouseX, mouseY, partialTick);
+        guiGraphics.renderFakeItem(this.recipeOutput, this.getX(), this.getY() + 1);
     }
 }

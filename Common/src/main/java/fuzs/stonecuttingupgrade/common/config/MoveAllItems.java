@@ -1,6 +1,6 @@
 package fuzs.stonecuttingupgrade.common.config;
 
-import net.minecraft.client.input.KeyEvent;
+import fuzs.puzzleslib.api.client.input.v1.KeyEvent;
 
 import java.util.function.Predicate;
 

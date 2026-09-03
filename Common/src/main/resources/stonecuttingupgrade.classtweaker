@@ -1,5 +1,7 @@
 classTweaker    v2  official
-transitive-accessible   field   net/minecraft/client/gui/components/AbstractScrollArea  scrolling   Z
-transitive-extendable   method  net/minecraft/client/gui/components/AbstractSelectionList   getFirstEntryY  ()I
+transitive-accessible	method	net/minecraft/client/gui/components/AbstractSelectionList	clearEntries	()V
+transitive-accessible   field   net/minecraft/client/gui/components/AbstractSelectionList   scrolling   Z
+transitive-extendable   method  net/minecraft/client/gui/components/AbstractSelectionList   getEntryAtPosition  (DD)Lnet/minecraft/client/gui/components/AbstractSelectionList$Entry;
+transitive-accessible	method	net/minecraft/client/gui/screens/worldselection/WorldSelectionList	clearEntries	()V
 transitive-mutable  field   net/minecraft/world/inventory/Slot  x   I
 transitive-mutable  field   net/minecraft/world/inventory/Slot  y   I

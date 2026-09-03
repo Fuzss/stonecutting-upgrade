@@ -1,6 +1,6 @@
 package fuzs.stonecuttingupgrade.neoforge;
 
-import fuzs.puzzleslib.common.api.core.v1.ModConstructor;
+import fuzs.puzzleslib.api.core.v1.ModConstructor;
 import fuzs.stonecuttingupgrade.common.StonecuttingUpgrade;
 import net.neoforged.fml.common.Mod;
 

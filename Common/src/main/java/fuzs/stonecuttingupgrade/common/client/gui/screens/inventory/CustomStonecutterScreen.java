@@ -1,27 +1,26 @@
 package fuzs.stonecuttingupgrade.common.client.gui.screens.inventory;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import fuzs.puzzleslib.common.api.client.gui.v2.components.AbstractMenuSelectionList;
+import fuzs.puzzleslib.api.client.gui.v2.screens.inventory.AbstractWidgetsContainerScreen;
+import fuzs.puzzleslib.api.client.input.v1.KeyEvent;
 import fuzs.stonecuttingupgrade.common.StonecuttingUpgrade;
+import fuzs.stonecuttingupgrade.common.client.gui.components.AbstractMenuSelectionList;
 import fuzs.stonecuttingupgrade.common.client.gui.components.RecipeImageButton;
 import fuzs.stonecuttingupgrade.common.config.ClientConfig;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.WidgetSprites;
-import net.minecraft.client.input.KeyEvent;
-import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
-import net.minecraft.util.context.ContextMap;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.ContainerInput;
+import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.inventory.StonecutterMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.SelectableRecipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.StonecutterRecipe;
-import net.minecraft.world.item.crafting.display.SlotDisplay;
-import net.minecraft.world.item.crafting.display.SlotDisplayContext;
 
 import java.util.List;
 
@@ -29,12 +28,14 @@ import java.util.List;
  * @see net.minecraft.client.gui.screens.inventory.StonecutterScreen
  */
 public class CustomStonecutterScreen extends AbstractWidgetsContainerScreen<StonecutterMenu> {
-    public static final Identifier TEXTURE_LOCATION = StonecuttingUpgrade.id("textures/gui/container/stonecutter.png");
-    public static final Identifier RECIPE_SELECTED_SPRITE = Identifier.withDefaultNamespace(
+    public static final ResourceLocation TEXTURE_LOCATION = StonecuttingUpgrade.id(
+            "textures/gui/container/stonecutter.png");
+    public static final ResourceLocation RECIPE_SELECTED_SPRITE = ResourceLocation.withDefaultNamespace(
             "container/stonecutter/recipe_selected");
-    public static final Identifier RECIPE_HIGHLIGHTED_SPRITE = Identifier.withDefaultNamespace(
+    public static final ResourceLocation RECIPE_HIGHLIGHTED_SPRITE = ResourceLocation.withDefaultNamespace(
             "container/stonecutter/recipe_highlighted");
-    public static final Identifier RECIPE_SPRITE = Identifier.withDefaultNamespace("container/stonecutter/recipe");
+    public static final ResourceLocation RECIPE_SPRITE = ResourceLocation.withDefaultNamespace(
+            "container/stonecutter/recipe");
     public static final WidgetSprites RECIPE_SPRITES = new WidgetSprites(RECIPE_SPRITE,
             RECIPE_SELECTED_SPRITE,
             RECIPE_HIGHLIGHTED_SPRITE);
@@ -83,13 +84,11 @@ public class CustomStonecutterScreen extends AbstractWidgetsContainerScreen<Ston
                     RecipeImageButton.clearLastRecipeOutput();
                 }
 
-                ContextMap contextMap = SlotDisplayContext.fromLevel(this.minecraft.level);
-                List<SelectableRecipe.SingleInputEntry<StonecutterRecipe>> recipesForInput = this.getMenu()
-                        .getVisibleRecipes()
-                        .entries();
+                List<RecipeHolder<StonecutterRecipe>> recipesForInput = this.menu.getRecipes();
                 for (int recipeIndex = 0; recipeIndex < recipesForInput.size(); recipeIndex++) {
-                    SlotDisplay slotDisplay = recipesForInput.get(recipeIndex).recipe().optionDisplay();
-                    ItemStack itemStack = slotDisplay.resolveForFirstStack(contextMap);
+                    ItemStack itemStack = recipesForInput.get(recipeIndex)
+                            .value()
+                            .getResultItem(this.minecraft.level.registryAccess());
                     this.scrollingList.addRecipe(this.getMenu(), recipeIndex, itemStack);
                 }
             }
@@ -101,10 +100,8 @@ public class CustomStonecutterScreen extends AbstractWidgetsContainerScreen<Ston
     }
 
     @Override
-    public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
-        super.extractBackground(guiGraphics, mouseX, mouseY, partialTick);
-        guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
-                TEXTURE_LOCATION,
+    public void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
+        guiGraphics.blit(TEXTURE_LOCATION,
                 this.leftPos,
                 this.topPos,
                 0.0F,
@@ -116,8 +113,12 @@ public class CustomStonecutterScreen extends AbstractWidgetsContainerScreen<Ston
     }
 
     @Override
+    public boolean keyPressed(int key, int scancode, int modifiers) {
+        return this.keyPressed(new KeyEvent(key, scancode, modifiers));
+    }
+
     public boolean keyPressed(KeyEvent keyEvent) {
-        if (super.keyPressed(keyEvent)) {
+        if (super.keyPressed(keyEvent.key(), keyEvent.scancode(), keyEvent.modifiers())) {
             return true;
         }
 
@@ -158,7 +159,8 @@ public class CustomStonecutterScreen extends AbstractWidgetsContainerScreen<Ston
             }
 
             if (hasMovedItems) {
-                AbstractWidget.playButtonClickSound(this.minecraft.getSoundManager());
+                SoundManager soundManager = this.minecraft.getSoundManager();
+                soundManager.play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
                 return true;
             }
         }
@@ -170,16 +172,16 @@ public class CustomStonecutterScreen extends AbstractWidgetsContainerScreen<Ston
         this.slotClicked(inputSlot,
                 inputSlot.index,
                 moveAllItems ? InputConstants.MOUSE_BUTTON_LEFT : InputConstants.MOUSE_BUTTON_RIGHT,
-                ContainerInput.PICKUP);
+                ClickType.PICKUP);
     }
 
     private void refillSlotFromInventory(Slot inventorySlot, Slot inputSlot, boolean moveAllItems) {
-        this.slotClicked(inventorySlot, inventorySlot.index, InputConstants.MOUSE_BUTTON_LEFT, ContainerInput.PICKUP);
+        this.slotClicked(inventorySlot, inventorySlot.index, InputConstants.MOUSE_BUTTON_LEFT, ClickType.PICKUP);
         this.slotClicked(inputSlot,
                 inputSlot.index,
                 moveAllItems ? InputConstants.MOUSE_BUTTON_LEFT : InputConstants.MOUSE_BUTTON_RIGHT,
-                ContainerInput.PICKUP);
-        this.slotClicked(inventorySlot, inventorySlot.index, InputConstants.MOUSE_BUTTON_LEFT, ContainerInput.PICKUP);
+                ClickType.PICKUP);
+        this.slotClicked(inventorySlot, inventorySlot.index, InputConstants.MOUSE_BUTTON_LEFT, ClickType.PICKUP);
     }
 
     private class RecipeSelectionList extends AbstractMenuSelectionList<RecipeSelectionList.Entry> {
@@ -217,10 +219,6 @@ public class CustomStonecutterScreen extends AbstractWidgetsContainerScreen<Ston
 
         private static class Entry extends AbstractMenuSelectionList.Entry<Entry> {
 
-            @Override
-            public <T extends AbstractWidget> T addRenderableWidget(T widget) {
-                return super.addRenderableWidget(widget);
-            }
         }
     }
 }
