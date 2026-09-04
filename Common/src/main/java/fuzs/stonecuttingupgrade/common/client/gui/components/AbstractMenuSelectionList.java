@@ -17,7 +17,11 @@ import java.util.List;
  * A selection list implementation that can be used as part of a screen anywhere, without having to cover the whole
  * screen width.
  * <p>
- * Also, the scroll bar is mostly handled separately, and is placed outside the bounds of the actual list.
+ * Also, the scroll bar is mostly handled separately and is placed outside the bounds of the actual list.
+ * <p>
+ * There is no need to handle
+ * {@link net.minecraft.client.gui.components.AbstractSelectionList#renderSelection(GuiGraphics, int, int, int, int,
+ * int)} as that is already bypassed in {@link ContainerObjectSelectionList#isSelectedItem(int)}.
  */
 public abstract class AbstractMenuSelectionList<E extends ContainerObjectSelectionList.Entry<E>> extends UpdatedContainerObjectSelectionList<E> {
     public static final ResourceLocation SCROLLER_SPRITE = ResourceLocation.withDefaultNamespace(
@@ -36,46 +40,18 @@ public abstract class AbstractMenuSelectionList<E extends ContainerObjectSelecti
     }
 
     @Override
-    public E getEntryAtPosition(double mouseX, double mouseY) {
-        // a trick to get around vanilla subtracting 4 without having to copy the whole method
-        this.headerHeight -= 4;
-        E entry = super.getEntryAtPosition(mouseX, mouseY);
-        this.headerHeight += 4;
-        return entry;
-    }
-
-    @Override
     public int getRowWidth() {
         return this.getWidth();
     }
 
     @Override
-    protected void renderItem(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick, int index, int left, int top, int width, int height) {
-        // add back height subtracted by vanilla for item outline, which we have removed
-        super.renderItem(guiGraphics, mouseX, mouseY, partialTick, index, left, top, width, height + 4);
-    }
-
-    @Override
     protected void extractScrollbar(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         ResourceLocation sprite = this.scrollable() ? SCROLLER_SPRITE : SCROLLER_DISABLED_SPRITE;
-        int scrollerX = this.scrollBarX();
-        int scrollerY = this.scrollable() ? this.scrollBarY() : this.getY();
-        guiGraphics.blitSprite(
-                sprite,
-                scrollerX,
-                scrollerY,
+        guiGraphics.blitSprite(sprite,
+                this.scrollBarX(),
+                this.scrollBarY(),
                 this.scrollerWidth(),
                 this.scrollerHeight());
-    }
-
-    @Override
-    protected void renderDecorations(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        // TODO remove this
-        int posX = this.getScrollbarPosition();
-        double scrollAmount = this.getMaxScroll() > 0 ? this.getScrollAmount() / this.getMaxScroll() : 0;
-        int posY = this.getY() + (int) (scrollAmount * (this.getHeight() - this.scrollerHeight()));
-        ResourceLocation resourceLocation = this.getMaxScroll() > 0 ? SCROLLER_SPRITE : SCROLLER_DISABLED_SPRITE;
-        guiGraphics.blitSprite(resourceLocation, posX, posY, this.scrollbarWidth(), this.scrollerHeight());
     }
 
     @Override
@@ -89,21 +65,17 @@ public abstract class AbstractMenuSelectionList<E extends ContainerObjectSelecti
     }
 
     @Override
-    public int getMaxScroll() {
-        return Math.max(0, this.getMaxPosition() - this.getHeight());
-    }
-
-    public int maxScrollAmount() {
-        return this.getMaxScroll();
+    protected int contentHeight() {
+        return super.contentHeight() - 4;
     }
 
     @Override
-    protected void updateScrollingState(double mouseX, double mouseY, int button) {
-        this.scrolling = this.isValidClickButton(button) && this.isOverScrollbar(mouseX, mouseY);
+    public int scrollbarWidth() {
+        return this.scrollerWidth();
     }
 
-    protected boolean scrollable() {
-        return this.maxScrollAmount() > 0;
+    public int scrollbarHeight() {
+        return this.getHeight();
     }
 
     @Override
@@ -117,14 +89,6 @@ public abstract class AbstractMenuSelectionList<E extends ContainerObjectSelecti
     }
 
     @Override
-    public final double getScrollAmount() {
-        return this.scrollAmount();
-    }
-
-    public double scrollAmount() {
-        return super.getScrollAmount();
-    }
-
     public int scrollBarY() {
         if (!this.scrollable() || this.maxScrollAmount() == 0) {
             return this.getY();
@@ -136,12 +100,7 @@ public abstract class AbstractMenuSelectionList<E extends ContainerObjectSelecti
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if (!this.isValidMouseClick(button)) {
-            return false;
-        }
-
-        this.updateScrollingState(mouseX, mouseY, button);
-        if (this.scrolling) {
+        if (this.updateScrolling(mouseX, mouseY, button) && this.scrolling) {
             this.setMouseButtonScrollAmount(mouseX, mouseY, button);
             return true;
         } else {
@@ -160,29 +119,17 @@ public abstract class AbstractMenuSelectionList<E extends ContainerObjectSelecti
     }
 
     protected void setMouseButtonScrollAmount(double mouseX, double mouseY, int button) {
-        double scrollOffs = (mouseY - this.getY() - this.scrollerHeight() / 2.0) / (this.getHeight() - this.scrollerHeight());
-        this.setScrollAmount(Mth.clamp(scrollOffs, 0.0, 1.0) * this.getMaxScroll());
+        double scrollOffset =
+                (mouseY - this.getY() - this.scrollerHeight() / 2.0) / (this.scrollbarHeight() - this.scrollerHeight());
+        this.setScrollAmount(Mth.clamp(scrollOffset, 0.0, 1.0) * this.maxScrollAmount());
     }
-
-//    @Override
-//    public boolean isMouseOver(double mouseX, double mouseY) {
-//        return super.isMouseOver(mouseX, mouseY) || this.isMouseOverScrollbar(mouseX, mouseY);
-//    }
-//
-//    protected boolean isMouseOverScrollbar(double mouseX, double mouseY) {
-//        return ScreenHelper.isHovering(this.getScrollbarPosition(),
-//                this.getY(),
-//                this.scrollbarWidth(),
-//                this.getHeight(),
-//                mouseX,
-//                mouseY);
-//    }
 
     @Override
     public boolean isMouseOver(double mouseX, double mouseY) {
         return super.isMouseOver(mouseX, mouseY) || this.isOverScrollbar(mouseX, mouseY);
     }
 
+    @Override
     protected boolean isOverScrollbar(double mouseX, double mouseY) {
         return ScreenHelper.isHovering(this.scrollBarX(),
                 this.getY(),
@@ -193,13 +140,18 @@ public abstract class AbstractMenuSelectionList<E extends ContainerObjectSelecti
     }
 
     @Override
-    protected void renderSelection(GuiGraphics guiGraphics, int top, int width, int height, int outerColor, int innerColor) {
-        // NO-OP
+    public int getRowLeft() {
+        return this.getX();
     }
 
     @Override
-    public int getRowLeft() {
-        return this.getX();
+    public E getEntryAtPosition(double mouseX, double mouseY) {
+        // A workaround for getting around vanilla subtracting a height of 4.
+        // This avoids having to copy the whole method.
+        this.headerHeight -= 4;
+        E entry = super.getEntryAtPosition(mouseX, mouseY);
+        this.headerHeight += 4;
+        return entry;
     }
 
     @Override
@@ -217,9 +169,9 @@ public abstract class AbstractMenuSelectionList<E extends ContainerObjectSelecti
 
         @Override
         public void render(GuiGraphics guiGraphics, int index, int top, int left, int width, int height, int mouseX, int mouseY, boolean hovering, float partialTick) {
-            for (AbstractWidget abstractWidget : this.children) {
-                abstractWidget.setY(top);
-                abstractWidget.render(guiGraphics, mouseX, mouseY, partialTick);
+            for (AbstractWidget widget : this.children) {
+                widget.setY(top);
+                widget.render(guiGraphics, mouseX, mouseY, partialTick);
             }
         }
 
