@@ -2,6 +2,7 @@ package fuzs.stonecuttingupgrade.common.client.gui.screens.inventory;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import fuzs.puzzleslib.common.api.client.gui.v2.components.AbstractMenuSelectionList;
+import fuzs.puzzleslib.common.api.client.gui.v2.screens.inventory.AbstractWidgetsContainerScreen;
 import fuzs.stonecuttingupgrade.common.StonecuttingUpgrade;
 import fuzs.stonecuttingupgrade.common.client.gui.components.RecipeImageButton;
 import fuzs.stonecuttingupgrade.common.config.ClientConfig;
