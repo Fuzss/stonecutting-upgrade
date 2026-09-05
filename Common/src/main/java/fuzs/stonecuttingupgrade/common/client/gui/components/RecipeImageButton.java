@@ -48,7 +48,7 @@ public class RecipeImageButton extends ImageButton {
                 if (this.menu.getSelectedRecipeIndex() != recipeIndex) {
                     // When the recipe input update, this runs immediately, before the server is notified and has a chance to refresh the recipes for the new input.
                     // So this must run deferred, so the server has the correct recipes set up already which can then be selected.
-                    Minecraft.getInstance().execute(() -> {
+                    Minecraft.getInstance().tell(() -> {
                         this.selectRecipe(recipeIndex, false);
                     });
                 }

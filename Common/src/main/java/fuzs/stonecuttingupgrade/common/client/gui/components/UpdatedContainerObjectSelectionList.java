@@ -7,6 +7,7 @@ import net.minecraft.client.gui.components.ContainerObjectSelectionList;
 /**
  * Backported from Minecraft 26.2.
  */
+@Deprecated
 public abstract class UpdatedContainerObjectSelectionList<E extends ContainerObjectSelectionList.Entry<E>> extends ContainerObjectSelectionList<E> {
 
     public UpdatedContainerObjectSelectionList(Minecraft minecraft, int width, int height, int y, int itemHeight) {

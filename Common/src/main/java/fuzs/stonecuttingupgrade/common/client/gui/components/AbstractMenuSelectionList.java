@@ -23,6 +23,7 @@ import java.util.List;
  * {@link net.minecraft.client.gui.components.AbstractSelectionList#renderSelection(GuiGraphics, int, int, int, int,
  * int)} as that is already bypassed in {@link ContainerObjectSelectionList#isSelectedItem(int)}.
  */
+@Deprecated
 public abstract class AbstractMenuSelectionList<E extends ContainerObjectSelectionList.Entry<E>> extends UpdatedContainerObjectSelectionList<E> {
     public static final ResourceLocation SCROLLER_SPRITE = ResourceLocation.withDefaultNamespace(
             "container/creative_inventory/scroller");
