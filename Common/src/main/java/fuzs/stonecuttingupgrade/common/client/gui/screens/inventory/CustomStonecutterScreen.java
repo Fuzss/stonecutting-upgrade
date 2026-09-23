@@ -10,11 +10,13 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.context.ContextMap;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.inventory.StonecutterMenu;
@@ -168,19 +170,36 @@ public class CustomStonecutterScreen extends AbstractWidgetsContainerScreen<Ston
     }
 
     private void refillSlotFromCarried(Slot inputSlot, boolean moveAllItems) {
-        this.slotClicked(inputSlot,
-                inputSlot.index,
-                moveAllItems ? InputConstants.MOUSE_BUTTON_LEFT : InputConstants.MOUSE_BUTTON_RIGHT,
-                ContainerInput.PICKUP);
+        int buttonNum = moveAllItems ? InputConstants.MOUSE_BUTTON_LEFT : InputConstants.MOUSE_BUTTON_RIGHT;
+        this.slotClicked(inputSlot, inputSlot.index, getContainerClickButton(buttonNum), ContainerInput.PICKUP);
     }
 
     private void refillSlotFromInventory(Slot inventorySlot, Slot inputSlot, boolean moveAllItems) {
         this.slotClicked(inventorySlot, inventorySlot.index, InputConstants.MOUSE_BUTTON_LEFT, ContainerInput.PICKUP);
-        this.slotClicked(inputSlot,
-                inputSlot.index,
-                moveAllItems ? InputConstants.MOUSE_BUTTON_LEFT : InputConstants.MOUSE_BUTTON_RIGHT,
+        int buttonNum = moveAllItems ? InputConstants.MOUSE_BUTTON_LEFT : InputConstants.MOUSE_BUTTON_RIGHT;
+        this.slotClicked(inputSlot, inputSlot.index, getContainerClickButton(buttonNum), ContainerInput.PICKUP);
+        this.slotClicked(inventorySlot,
+                inventorySlot.index,
+                getContainerClickButton(InputConstants.MOUSE_BUTTON_LEFT),
                 ContainerInput.PICKUP);
-        this.slotClicked(inventorySlot, inventorySlot.index, InputConstants.MOUSE_BUTTON_LEFT, ContainerInput.PICKUP);
+    }
+
+    /**
+     * Converts a mouse button to the corresponding container click button index.
+     *
+     * @param buttonNum the pressed button
+     * @return the container click button index
+     *
+     * @see net.minecraft.client.gui.screens.inventory.AbstractContainerScreen#getContainerClickButton(MouseButtonEvent)
+     * @deprecated replace with method from Puzzles Lib when updating
+     */
+    @Deprecated
+    public static int getContainerClickButton(int buttonNum) {
+        return switch (buttonNum) {
+            case InputConstants.MOUSE_BUTTON_LEFT -> AbstractContainerMenu.CONTAINER_CLICK_PRIMARY;
+            case InputConstants.MOUSE_BUTTON_RIGHT -> AbstractContainerMenu.CONTAINER_CLICK_SECONDARY;
+            default -> buttonNum;
+        };
     }
 
     private class RecipeSelectionList extends AbstractMenuSelectionList<RecipeSelectionList.Entry> {
@@ -218,10 +237,6 @@ public class CustomStonecutterScreen extends AbstractWidgetsContainerScreen<Ston
 
         private static class Entry extends AbstractMenuSelectionList.Entry<Entry> {
 
-            @Override
-            public <T extends AbstractWidget> T addRenderableWidget(T widget) {
-                return super.addRenderableWidget(widget);
-            }
         }
     }
 }
